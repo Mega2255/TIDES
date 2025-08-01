@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenleaf National Bank - Your Trusted Financial Partner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --bg-primary: #0A2E20;
+            --bg-secondary: #1A4D35;
+            --bg-card: #2B684B;
+            --text-primary: #E6F0E6;
+            --text-secondary: #A0C0A0;
+            --border-color: #4CAF50;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --btn-green-from: #4CAF50;
+            --btn-green-to: #388E3C;
+            --btn-accent-from: #60A5FA;
+            --btn-accent-to: #2563EB;
+            --btn-red: #dc2626;
+            --btn-red-hover: #b91c1c;
+            --icon-color: #81C784;
+            --hero-overlay: rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Ensure no horizontal scrolling on body */
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .bg-primary-green { background-color: var(--bg-primary); }
+        .bg-secondary-green { background-color: var(--bg-secondary); }
+        .bg-card-green { background-color: var(--bg-card); }
+        .text-primary-light { color: var(--text-primary); }
+        .text-secondary-light { color: var(--text-secondary); }
+        .border-color { border-color: var(--border-color); }
+
+        .btn-green {
+            background-image: linear-gradient(to right, var(--btn-green-from), var(--btn-green-to));
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        .btn-green:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        .btn-accent {
+            background-image: linear-gradient(to right, var(--btn-accent-from), var(--btn-accent-to));
+            box-shadow: 0 5px 15px rgba(96, 165, 250, 0.4);
+        }
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(96, 165, 250, 0.6);
+        }
+
+        .text-icon-color { color: var(--icon-color); }
+
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(76, 175, 80, 0.7);
+        }
+        .btn-accent.btn-glow {
+            box-shadow: 0 0 15px rgba(96, 165, 250, 0.5);
+        }
+        .btn-accent.btn-glow:hover {
+            box-shadow: 0 0 25px rgba(96, 165, 250, 0.7);
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
+        }
+        .preloader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #finflow-text {
+            animation: text-pop-in 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, text-glow 2s infinite alternate;
+            transform: scale(0.8);
+            opacity: 0;
+            display: block;
+        }
+        @keyframes text-pop-in {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 5px rgba(76, 175, 80, 0.5), 0 0 10px rgba(129, 199, 132, 0.3); }
+            100% { text-shadow: 0 0 15px rgba(76, 175, 80, 0.8), 0 0 25px rgba(129, 199, 132, 0.5); }
+        }
+        @keyframes ping-slow {
+            0% { transform: scale(0.8); opacity: 0.75; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+        .animate-ping-slow {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        .animate-ping-slow-delay {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite 1s;
+        }
+        .animate-spin-fast {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #loading-bar {
+            animation: loading-bar-pulse 1.5s infinite alternate;
+        }
+        @keyframes loading-bar-pulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: var(--hero-overlay);
+        }
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            background-color: rgba(129, 199, 132, 0.3);
+            border-radius: 50%;
+            animation: float-particle 20s infinite ease-in-out;
+            opacity: 0;
+        }
+        .particle:nth-child(1) { width: 10px; height: 10px; left: 5%; top: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 15px; height: 15px; left: 20%; top: 40%; animation-delay: 3s; background-color: rgba(76, 175, 80, 0.3); }
+        .particle:nth-child(3) { width: 8px; height: 8px; left: 40%; top: 5%; animation-delay: 6s; }
+        .particle:nth-child(4) { width: 12px; height: 12px; left: 60%; top: 70%; animation-delay: 9s; background-color: rgba(129, 199, 132, 0.3); }
+        .particle:nth-child(5) { width: 18px; height: 18px; left: 80%; top: 20%; animation-delay: 12s; }
+        .particle:nth-child(6) { width: 7px; height: 7px; left: 95%; top: 50%; animation-delay: 15s; background-color: rgba(76, 175, 80, 0.3); }
+        .particle:nth-child(7) { width: 11px; height: 11px; left: 15%; top: 85%; animation-delay: 18s; }
+        @keyframes float-particle {
+            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translateY(-20px) translateX(10px) scale(1); }
+            80% { opacity: 1; transform: translateY(20px) translateX(-10px) scale(1); }
+            100% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+        }
+
+        .section-parallax-bg {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate.fade-in-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .animate.delay-150 { transition-delay: 0.15s; }
+        .animate.delay-300 { transition-delay: 0.3s; }
+        .animate.delay-400 { transition-delay: 0.4s; }
+        .animate.delay-500 { transition-delay: 0.5s; }
+        .animate.delay-600 { transition-delay: 0.6s; }
+        .animate.delay-700 { transition-delay: 0.7s; }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .slide-in-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scale-in.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Responsive font sizes and padding adjustments */
+        /* Header */
+        header .container {
+            padding-left: 0.5rem; /* px-2 */
+            padding-right: 0.5rem; /* px-2 */
+            padding-top: 0.5rem; /* py-2 */
+            padding-bottom: 0.5rem; /* py-2 */
+        }
+        header .logo-text { font-size: 0.875rem; } /* text-sm */
+        header .icon-size { font-size: 0.875rem; } /* text-sm */
+        @media (min-width: 640px) { /* sm */
+            header .container {
+                padding-left: 1rem; /* sm:px-4 */
+                padding-right: 1rem; /* sm:px-4 */
+                padding-top: 0.75rem; /* sm:py-3 */
+                padding-bottom: 0.75rem; /* sm:py-3 */
+            }
+            header .logo-text { font-size: 1rem; } /* sm:text-base */
+            header .icon-size { font-size: 1rem; } /* sm:text-base */
+        }
+        @media (min-width: 768px) { /* md */
+            header .container {
+                padding-left: 1.5rem; /* md:px-6 */
+                padding-right: 1.5rem; /* md:px-6 */
+                padding-top: 1rem; /* md:py-4 */
+                padding-bottom: 1rem; /* md:py-4 */
+            }
+            header .logo-text { font-size: 1.125rem; } /* md:text-lg */
+            header .icon-size { font-size: 1.125rem; } /* md:text-lg */
+        }
+        @media (min-width: 1024px) { /* lg */
+            header .logo-text { font-size: 1.25rem; } /* lg:text-xl */
+            header .icon-size { font-size: 1.25rem; } /* lg:text-xl */
+        }
+
+        /* Preloader */
+        #preloader .text-3xl { font-size: 1.5rem; } /* text-2xl */
+        #preloader .w-16 { width: 3rem; height: 3rem; } /* w-12 h-12 */
+        #preloader .w-12 { width: 2.5rem; height: 2.5rem; } /* w-10 h-10 */
+        #preloader .text-base { font-size: 0.875rem; } /* text-sm */
+        #preloader .w-40 { width: 8rem; } /* w-32 */
+        @media (min-width: 640px) { /* sm */
+            #preloader .text-3xl { font-size: 1.875rem; } /* sm:text-3xl */
+            #preloader .w-16 { width: 4rem; height: 4rem; } /* sm:w-16 sm:h-16 */
+            #preloader .w-12 { width: 3rem; height: 3rem; } /* sm:w-12 sm:h-12 */
+            #preloader .text-base { font-size: 1rem; } /* sm:text-base */
+            #preloader .w-40 { width: 10rem; } /* sm:w-40 */
+        }
+        @media (min-width: 768px) { /* md */
+            #preloader .text-3xl { font-size: 2.25rem; } /* md:text-4xl */
+            #preloader .w-16 { width: 5rem; height: 5rem; } /* md:w-20 md:h-20 */
+            #preloader .w-12 { width: 4rem; height: 4rem; } /* md:w-16 md:h-16 */
+            #preloader .text-base { font-size: 1.125rem; } /* md:text-lg */
+            #preloader .w-40 { width: 12rem; } /* md:w-48 */
+        }
+
+        /* Hero Section Font Sizes */
+        #hero h1 { font-size: 1.75rem; } /* text-3xl */
+        #hero p { font-size: 0.8125rem; } /* text-xs (slightly larger than 0.75rem) */
+        #hero button { padding: 0.4rem 1rem; font-size: 0.75rem; } /* py-1.5 px-4, text-xs */
+        @media (min-width: 640px) { /* sm */
+            #hero h1 { font-size: 2.25rem; } /* sm:text-4xl */
+            #hero p { font-size: 0.875rem; } /* sm:text-sm */
+            #hero button { padding: 0.5rem 1.25rem; font-size: 0.8125rem; } /* sm:py-2 sm:px-5, sm:text-xs */
+        }
+        @media (min-width: 768px) { /* md */
+            #hero h1 { font-size: 3rem; } /* md:text-5xl */
+            #hero p { font-size: 1rem; } /* md:text-base */
+            #hero button { padding: 0.6rem 1.5rem; font-size: 0.875rem; } /* md:py-2.5 md:px-6, md:text-sm */
+        }
+        @media (min-width: 1024px) { /* lg */
+            #hero h1 { font-size: 3.75rem; } /* lg:text-6xl */
+            #hero p { font-size: 1.125rem; } /* lg:text-lg */
+            #hero button { padding: 0.75rem 2rem; font-size: 1rem; } /* lg:py-3 lg:px-8, lg:text-base */
+        }
+
+        /* Statistics Section Font Sizes */
+        #statistics h2 { font-size: 1.5rem; } /* text-2xl */
+        #statistics .text-2xl { font-size: 1.5rem; } /* text-2xl */
+        #statistics .text-xs { font-size: 0.6875rem; } /* text-xxs (custom smaller) */
+        #statistics .p-3 { padding: 0.5rem; } /* p-2 */
+        @media (min-width: 640px) { /* sm */
+            #statistics h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            #statistics .text-2xl { font-size: 1.75rem; } /* sm:text-3xl */
+            #statistics .text-xs { font-size: 0.75rem; } /* sm:text-xs */
+            #statistics .p-3 { padding: 0.75rem; } /* sm:p-3 */
+        }
+        @media (min-width: 768px) { /* md */
+            #statistics h2 { font-size: 2rem; } /* md:text-4xl */
+            #statistics .text-2xl { font-size: 2.25rem; } /* md:text-4xl */
+            #statistics .text-xs { font-size: 0.8125rem; } /* md:text-sm */
+            #statistics .p-3 { padding: 1rem; } /* md:p-4 */
+        }
+
+        /* About Section Font Sizes */
+        #about h2 { font-size: 1.5rem; } /* text-2xl */
+        #about p { font-size: 0.8125rem; } /* text-xs */
+        #about .text-xs { font-size: 0.6875rem; } /* text-xxs (custom smaller) */
+        #about .text-xl { font-size: 1.125rem; } /* text-lg */
+        #about button { padding: 0.4rem 1rem; font-size: 0.75rem; } /* py-1.5 px-4, text-xs */
+        @media (min-width: 640px) { /* sm */
+            #about h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            #about p { font-size: 0.875rem; } /* sm:text-sm */
+            #about .text-xs { font-size: 0.75rem; } /* sm:text-xs */
+            #about .text-xl { font-size: 1.25rem; } /* sm:text-xl */
+            #about button { padding: 0.5rem 1.25rem; font-size: 0.8125rem; } /* sm:py-2 sm:px-5, sm:text-xs */
+        }
+        @media (min-width: 768px) { /* md */
+            #about h2 { font-size: 2rem; } /* md:text-4xl */
+            #about p { font-size: 1rem; } /* md:text-base */
+            #about .text-xs { font-size: 0.8125rem; } /* md:text-sm */
+            #about .text-xl { font-size: 1.5rem; } /* md:text-2xl */
+            #about button { padding: 0.6rem 1.5rem; font-size: 0.875rem; } /* md:py-2.5 md:px-6, md:text-sm */
+        }
+
+        /* Services Section Font Sizes */
+        #services h2 { font-size: 1.5rem; } /* text-2xl */
+        #services p { font-size: 0.8125rem; } /* text-xs */
+        #services .text-3xl { font-size: 1.75rem; } /* text-3xl */
+        #services .text-lg { font-size: 0.9375rem; } /* text-base (slightly smaller) */
+        #services .text-xs { font-size: 0.6875rem; } /* text-xxs (custom smaller) */
+        #services .p-3 { padding: 0.5rem; } /* p-2 */
+        @media (min-width: 640px) { /* sm */
+            #services h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            #services p { font-size: 0.875rem; } /* sm:text-sm */
+            #services .text-3xl { font-size: 2rem; } /* sm:text-4xl */
+            #services .text-lg { font-size: 1rem; } /* sm:text-base */
+            #services .text-xs { font-size: 0.75rem; } /* sm:text-xs */
+            #services .p-3 { padding: 0.75rem; } /* sm:p-3 */
+        }
+        @media (min-width: 768px) { /* md */
+            #services h2 { font-size: 2rem; } /* md:text-4xl */
+            #services p { font-size: 1rem; } /* md:text-base */
+            #services .text-3xl { font-size: 2.5rem; } /* md:text-5xl */
+            #services .text-lg { font-size: 1.125rem; } /* md:text-lg */
+            #services .text-xs { font-size: 0.8125rem; } /* md:text-sm */
+            #services .p-3 { padding: 1rem; } /* md:p-4 */
+        }
+
+        /* How It Works Section Font Sizes */
+        #how-it-works h2 { font-size: 1.5rem; } /* text-2xl */
+        #how-it-works p { font-size: 0.8125rem; } /* text-xs */
+        #how-it-works .h-8 { height: 1.75rem; width: 1.75rem; } /* h-7 w-7 */
+        #how-it-works .text-base { font-size: 0.875rem; } /* text-sm */
+        #how-it-works .text-xs { font-size: 0.6875rem; } /* text-xxs (custom smaller) */
+        #how-it-works .p-3 { padding: 0.5rem; } /* p-2 */
+        @media (min-width: 640px) { /* sm */
+            #how-it-works h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            #how-it-works p { font-size: 0.875rem; } /* sm:text-sm */
+            #how-it-works .h-8 { height: 2rem; width: 2rem; } /* sm:h-8 sm:w-8 */
+            #how-it-works .text-base { font-size: 1rem; } /* sm:text-base */
+            #how-it-works .text-xs { font-size: 0.75rem; } /* sm:text-xs */
+            #how-it-works .p-3 { padding: 0.75rem; } /* sm:p-3 */
+        }
+        @media (min-width: 768px) { /* md */
+            #how-it-works h2 { font-size: 2rem; } /* md:text-4xl */
+            #how-it-works p { font-size: 1rem; } /* md:text-base */
+            #how-it-works .h-8 { height: 2.5rem; width: 2.5rem; } /* md:h-10 md:w-10 */
+            #how-it-works .text-base { font-size: 1.125rem; } /* md:text-lg */
+            #how-it-works .text-xs { font-size: 0.8125rem; } /* md:text-sm */
+            #how-it-works .p-3 { padding: 1rem; } /* md:p-4 */
+        }
+
+        /* Features Section Font Sizes */
+        #features h2 { font-size: 1.5rem; } /* text-2xl */
+        #features p { font-size: 0.8125rem; } /* text-xs */
+        #features .text-4xl { font-size: 2rem; } /* text-4xl */
+        #features .text-lg { font-size: 0.9375rem; } /* text-base (slightly smaller) */
+        #features .text-xs { font-size: 0.6875rem; } /* text-xxs (custom smaller) */
+        #features .p-3 { padding: 0.5rem; } /* p-2 */
+        @media (min-width: 640px) { /* sm */
+            #features h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            #features p { font-size: 0.875rem; } /* sm:text-sm */
+            #features .text-4xl { font-size: 2.25rem; } /* sm:text-5xl */
+            #features .text-lg { font-size: 1rem; } /* sm:text-base */
+            #features .text-xs { font-size: 0.75rem; } /* sm:text-xs */
+            #features .p-3 { padding: 0.75rem; } /* sm:p-3 */
+        }
+        @media (min-width: 768px) { /* md */
+            #features h2 { font-size: 2rem; } /* md:text-4xl */
+            #features p { font-size: 1rem; } /* md:text-base */
+            #features .text-4xl { font-size: 2.5rem; } /* md:text-5xl */
+            #features .text-lg { font-size: 1.125rem; } /* md:text-lg */
+            #features .text-xs { font-size: 0.8125rem; } /* md:text-sm */
+            #features .p-3 { padding: 1rem; } /* md:p-4 */
+        }
+
+        /* Call to Action Section */
+        .section-parallax-bg h2 { font-size: 1.5rem; } /* text-2xl */
+        .section-parallax-bg p { font-size: 0.8125rem; } /* text-xs */
+        .section-parallax-bg a { padding: 0.5rem 1.25rem; font-size: 0.8125rem; } /* py-2 px-5, text-xs */
+        @media (min-width: 640px) { /* sm */
+            .section-parallax-bg h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            .section-parallax-bg p { font-size: 0.875rem; } /* sm:text-sm */
+            .section-parallax-bg a { padding: 0.6rem 1.5rem; font-size: 0.875rem; } /* sm:py-2.5 sm:px-6, sm:text-sm */
+        }
+        @media (min-width: 768px) { /* md */
+            .section-parallax-bg h2 { font-size: 2rem; } /* md:text-4xl */
+            .section-parallax-bg p { font-size: 1rem; } /* md:text-base */
+            .section-parallax-bg a { padding: 0.75rem 2rem; font-size: 1rem; } /* md:py-3 md:px-8, md:text-base */
+        }
+
+        /* News Section Font Sizes */
+        #news h2 { font-size: 1.5rem; } /* text-2xl */
+        #news p { font-size: 0.8125rem; } /* text-xs */
+        #news .text-lg { font-size: 0.9375rem; } /* text-base (slightly smaller) */
+        #news .text-xs { font-size: 0.6875rem; } /* text-xxs (custom smaller) */
+        #news .p-3 { padding: 0.5rem; } /* p-2 */
+        @media (min-width: 640px) { /* sm */
+            #news h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            #news p { font-size: 0.875rem; } /* sm:text-sm */
+            #news .text-lg { font-size: 1rem; } /* sm:text-base */
+            #news .text-xs { font-size: 0.75rem; } /* sm:text-xs */
+            #news .p-3 { padding: 0.75rem; } /* sm:p-3 */
+        }
+        @media (min-width: 768px) { /* md */
+            #news h2 { font-size: 2rem; } /* md:text-4xl */
+            #news p { font-size: 1rem; } /* md:text-base */
+            #news .text-lg { font-size: 1.125rem; } /* md:text-lg */
+            #news .text-xs { font-size: 0.8125rem; } /* md:text-sm */
+            #news .p-3 { padding: 1rem; } /* md:p-4 */
+        }
+
+        /* Contact Section Font Sizes */
+        #contact h2 { font-size: 1.5rem; } /* text-2xl */
+        #contact p { font-size: 0.8125rem; } /* text-xs */
+        #contact .text-lg { font-size: 0.9375rem; } /* text-base (slightly smaller) */
+        #contact .text-xs { font-size: 0.6875rem; } /* text-xxs (custom smaller) */
+        #contact .p-3 { padding: 0.5rem; } /* p-2 */
+        #contact input, #contact textarea { padding: 0.3rem 0.5rem; font-size: 0.75rem; } /* py-1 px-2 */
+        #contact button { padding: 0.4rem 1rem; font-size: 0.75rem; } /* py-1.5 px-4 */
+        @media (min-width: 640px) { /* sm */
+            #contact h2 { font-size: 1.75rem; } /* sm:text-3xl */
+            #contact p { font-size: 0.875rem; } /* sm:text-sm */
+            #contact .text-lg { font-size: 1rem; } /* sm:text-base */
+            #contact .text-xs { font-size: 0.75rem; } /* sm:text-xs */
+            #contact .p-3 { padding: 0.75rem; } /* sm:p-3 */
+            #contact input, #contact textarea { padding: 0.4rem 0.6rem; font-size: 0.8125rem; } /* sm:py-1.5 sm:px-2.5 */
+            #contact button { padding: 0.5rem 1.25rem; font-size: 0.8125rem; } /* sm:py-2 sm:px-5 */
+        }
+        @media (min-width: 768px) { /* md */
+            #contact h2 { font-size: 2rem; } /* md:text-4xl */
+            #contact p { font-size: 1rem; } /* md:text-base */
+            #contact .text-lg { font-size: 1.125rem; } /* md:text-lg */
+            #contact .text-xs { font-size: 0.8125rem; } /* md:text-sm */
+            #contact .p-3 { padding: 1rem; } /* md:p-4 */
+            #contact input, #contact textarea { padding: 0.5rem 0.75rem; font-size: 0.875rem; } /* md:py-2 md:px-3 */
+            #contact button { padding: 0.6rem 1.5rem; font-size: 0.875rem; } /* md:py-2.5 md:px-6 */
+        }
+
+        /* Footer */
+        footer { padding-top: 0.5rem; padding-bottom: 0.5rem; font-size: 0.625rem; } /* text-xxs (custom smaller) */
+        @media (min-width: 640px) { /* sm */
+            footer { padding-top: 0.75rem; padding-bottom: 0.75rem; font-size: 0.75rem; } /* sm:text-xs */
+        }
+
+        /* General section padding adjustments */
+        .py-12 { padding-top: 1.5rem; padding-bottom: 1.5rem; } /* was 2rem */
+        .py-16 { padding-top: 2rem; padding-bottom: 2rem; } /* was 2.5rem */
+        .py-20 { padding-top: 2.5rem; padding-bottom: 2.5rem; } /* was 3rem */
+
+        @media (min-width: 768px) { /* md */
+            .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+            .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+            .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        }
+
+        .service-card-hover-effect {
+            transition: border-color 0.3s ease-in-out, transform 0.3s ease-in-out, border-width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-primary-green text-primary-light overflow-x-hidden">
+
+    <div id="preloader">
+        <div class="flex flex-col items-center">
+            <div class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-6 relative overflow-hidden text-center">
+                <span id="finflow-text" class="block">Greenleaf National Bank</span>
+            </div>
+            <div class="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center mb-8">
+                <div class="absolute w-full h-full rounded-full border-4 border-border-color animate-ping-slow opacity-75"></div>
+                <div class="absolute w-full h-full rounded-full border-4 border-icon-color animate-ping-slow-delay opacity-75"></div>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-btn-green-from to-btn-green-to flex items-center justify-center text-sm sm:text-base md:text-lg font-bold">
+                    <i class="fas fa-leaf animate-spin-fast"></i>
+                </div>
+            </div>
+            <div class="w-32 sm:w-40 md:w-48 h-3 bg-secondary-green rounded-full overflow-hidden shadow-inner">
+                <div id="loading-bar" class="h-full bg-gradient-to-r from-icon-color to-btn-green-to w-0 rounded-full transition-all duration-1000 ease-in-out"></div>
+            </div>
+            <p class="text-sm sm:text-base md:text-lg text-secondary-light mt-4">Initializing secure connection...</p>
+        </div>
+    </div>
+
+    <header class="bg-secondary-green bg-opacity-90 backdrop-blur-sm fixed w-full z-50 shadow-lg">
+        <nav class="container mx-auto px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center">
+                <i class="fas fa-leaf text-sm sm:text-base md:text-lg mr-2"></i>
+                <span class="logo-text font-bold text-primary-light block text-sm sm:text-base md:text-lg lg:text-xl">Greenleaf National Bank</span>
+            </a>
+            <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                <a href="#hero" class="text-primary-light hover:text-icon-color transition duration-300 flex items-center text-sm lg:text-base"><i class="fas fa-home mr-2"></i>Home</a>
+                <a href="#about" class="text-primary-light hover:text-icon-color transition duration-300 flex items-center text-sm lg:text-base"><i class="fas fa-info-circle mr-2"></i>About Us</a>
+                <a href="#services" class="text-primary-light hover:text-icon-color transition duration-300 flex items-center text-sm lg:text-base"><i class="fas fa-cogs mr-2"></i>Services</a>
+                <a href="#features" class="text-primary-light hover:text-icon-color transition duration-300 flex items-center text-sm lg:text-base"><i class="fas fa-star mr-2"></i>Features</a>
+                <a href="#news" class="text-primary-light hover:text-icon-color transition duration-300 flex items-center text-sm lg:text-base"><i class="fas fa-newspaper mr-2"></i>News</a>
+                <a href="#contact" class="text-primary-light hover:text-icon-color transition duration-300 flex items-center text-sm lg:text-base"><i class="fas fa-envelope mr-2"></i>Contact</a>
+                <a href="login.html" class="ml-6 lg:ml-8 px-4 py-2 rounded-full font-semibold text-sm lg:text-base transition duration-300 focus:outline-none focus:ring-2 focus:ring-border-color bg-btn-green text-white shadow-md btn-green flex items-center">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </a>
+                <a href="register.html" class="px-4 py-2 rounded-full font-semibold text-sm lg:text-base transition duration-300 focus:outline-none focus:ring-2 focus:ring-btn-accent-from bg-btn-accent text-white shadow-md btn-accent flex items-center">
+                    <i class="fas fa-user-plus mr-2"></i>Register
+                </a>
+            </div>
+            <div class="md:hidden flex items-center">
+                <a href="login.html" class="mr-3 px-3 py-1.5 rounded-full font-semibold text-xs bg-btn-green text-white shadow-md">
+                    Login
+                </a>
+                <a href="register.html" class="px-3 py-1.5 rounded-full font-semibold text-xs bg-btn-accent text-white shadow-md">
+                    Register
+                </a>
+                <button id="mobile-menu-button" class="text-primary-light focus:outline-none ml-3">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-secondary-green bg-opacity-95 py-4">
+            <a href="#hero" class="block px-6 py-2 text-primary-light hover:bg-secondary-green transition duration-300 flex items-center text-sm"><i class="fas fa-home mr-2"></i>Home</a>
+            <a href="#about" class="block px-6 py-2 text-primary-light hover:bg-secondary-green transition duration-300 flex items-center text-sm"><i class="fas fa-info-circle mr-2"></i>About Us</a>
+            <a href="#services" class="block px-6 py-2 text-primary-light hover:bg-secondary-green transition duration-300 flex items-center text-sm"><i class="fas fa-cogs mr-2"></i>Services</a>
+            <a href="#features" class="block px-6 py-2 text-primary-light hover:bg-secondary-green transition duration-300 flex items-center text-sm"><i class="fas fa-star mr-2"></i>Features</a>
+            <a href="#news" class="block px-6 py-2 text-primary-light hover:bg-secondary-green transition duration-300 flex items-center text-sm"><i class="fas fa-newspaper mr-2"></i>News</a>
+            <a href="#contact" class="block px-6 py-2 text-primary-light hover:bg-secondary-green transition duration-300 flex items-center text-sm"><i class="fas fa-envelope mr-2"></i>Contact</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section id="hero" class="relative min-h-screen overflow-hidden pt-24 sm:pt-28 md:pt-32">
+            <div class="hero-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <div class="absolute inset-0">
+                <div class="hero-slide active" style="background-image: url('https://cdn.pixabay.com/photo/2020/07/06/14/04/ecb-5377160_640.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="relative z-10 text-center px-4 max-w-xl sm:max-w-2xl lg:max-w-4xl mx-auto">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-3 sm:mb-4 animate fade-in-up">Your Financial Future, Secured.</h1>
+                        <p class="text-xs sm:text-sm md:text-base lg:text-lg text-gray-200 mb-6 sm:mb-8 animate fade-in-up delay-150">Seamless Online Banking at Your Fingertips.</p>
+                        <button class="bg-btn-green hover:bg-btn-green-to text-white font-bold py-1.5 px-4 sm:py-2 sm:px-5 md:py-2.5 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out animate fade-in-up delay-300 btn-green btn-glow text-xs sm:text-sm md:text-base">Open an Account</button>
+                    </div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://cdn.pixabay.com/photo/2022/10/23/15/20/online-banking-7541521_640.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="relative z-10 text-center px-4 max-w-xl sm:max-w-2xl lg:max-w-4xl mx-auto">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-3 sm:mb-4 animate fade-in-up">Explore the World of Digital Assets.</h1>
+                        <p class="text-xs sm:text-sm md:text-base lg:text-lg text-gray-200 mb-6 sm:mb-8 animate fade-in-up delay-150">Invest, Trade, and Grow with Crypto.</p>
+                        <button class="bg-btn-accent hover:bg-btn-accent-to text-white font-bold py-1.5 px-4 sm:py-2 sm:px-5 md:py-2.5 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out animate fade-in-up delay-300 btn-accent btn-glow text-xs sm:text-sm md:text-base">Start Trading Crypto</button>
+                    </div>
+                </div>
+                <div class="hero-slide" style="background-image: url('https://cdn.pixabay.com/photo/2021/07/11/19/44/money-6404791_640.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="relative z-10 text-center px-4 max-w-xl sm:max-w-2xl lg:max-w-4xl mx-auto">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-3 sm:mb-4 animate fade-in-up">Smart Banking, Smarter Choices.</h1>
+                        <p class="text-xs sm:text-sm md:text-base lg:text-lg text-gray-200 mb-6 sm:mb-8 animate fade-in-up delay-150">Manage Your Finances with Confidence.</p>
+                        <button class="bg-btn-green hover:bg-btn-green-to text-white font-bold py-1.5 px-4 sm:py-2 sm:px-5 md:py-2.5 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out animate fade-in-up delay-300 btn-green btn-glow text-xs sm:text-sm md:text-base">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="prev-slide" class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-secondary-green bg-opacity-50 hover:bg-opacity-75 text-white p-2 sm:p-3 rounded-full z-20 transition duration-300">
+                <i class="fas fa-chevron-left text-lg sm:text-xl"></i>
+            </button>
+            <button id="next-slide" class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-secondary-green bg-opacity-50 hover:bg-opacity-75 text-white p-2 sm:p-3 rounded-full z-20 transition duration-300">
+                <i class="fas fa-chevron-right text-lg sm:text-xl"></i>
+            </button>
+        </section>
+
+        <section id="statistics" class="py-12 sm:py-16 md:py-20 bg-secondary-green section-parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1551288259-cd728328b03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+            <div class="bg-primary-green bg-opacity-80 py-10 sm:py-12 md:py-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-12 text-center">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-8 sm:mb-10 md:mb-12 fade-in-up">Our Impact in Numbers</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                        <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 transition duration-300 fade-in-up delay-200">
+                            <i class="fas fa-users text-3xl sm:text-4xl mb-3 sm:mb-4 text-icon-color"></i>
+                            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2" data-target="25000">0</p>
+                            <p class="text-xs sm:text-sm text-secondary-light">Active Users</p>
+                        </div>
+                        <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 transition duration-300 fade-in-up delay-300">
+                            <i class="fas fa-exchange-alt text-3xl sm:text-4xl mb-3 sm:mb-4 text-border-color"></i>
+                            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2" data-target="10000">0</p>
+                            <p class="text-xs sm:text-sm text-secondary-light">Monthly Transactions</p>
+                        </div>
+                        <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 transition duration-300 fade-in-up delay-400">
+                            <i class="fas fa-wallet text-3xl sm:text-4xl mb-3 sm:mb-4 text-btn-green-from"></i>
+                            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2" data-target="500000">0</p>
+                            <p class="text-xs sm:text-sm text-secondary-light">Crypto Volume (USD)</p>
+                        </div>
+                        <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 transition duration-300 fade-in-up delay-500">
+                            <i class="fas fa-star text-3xl sm:text-4xl mb-3 sm:mb-4 text-btn-accent-from"></i>
+                            <p class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 sm:mb-2" data-target="4.9">0</p>
+                            <p class="text-xs sm:text-sm text-secondary-light">App Rating</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-12 sm:py-16 md:py-20 bg-primary-green">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
+                    <div class="lg:order-2 fade-in-up scale-in">
+                        <img src="https://cdn.pixabay.com/photo/2017/07/16/07/50/imprint-2508603_640.jpg" alt="Greenleaf National Bank Building" class="rounded-xl shadow-lg w-full h-auto object-cover">
+                    </div>
+                    <div class="lg:order-1 text-center lg:text-left">
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 slide-in-left">About Greenleaf National Bank: Your Trusted Financial Partner</h2>
+                        <p class="text-xs sm:text-sm md:text-base lg:text-lg text-secondary-light mb-6 sm:mb-8 slide-in-left delay-100">
+                            At Greenleaf National Bank, we believe in empowering your financial journey. We combine the reliability of traditional banking with the innovation of cryptocurrency, offering a secure, intuitive, and comprehensive platform for all your financial needs. Our mission is to simplify finance, making it accessible and understandable for everyone.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                            <div class="flex items-center space-x-3 fade-in-up delay-200">
+                                <i class="fas fa-shield-alt text-xl sm:text-2xl text-icon-color"></i>
+                                <p class="text-xs sm:text-sm text-primary-light font-medium">Bank-Grade Security</p>
+                            </div>
+                            <div class="flex items-center space-x-3 fade-in-up delay-300">
+                                <i class="fas fa-chart-line text-xl sm:text-2xl text-border-color"></i>
+                                <p class="text-xs sm:text-sm text-primary-light font-medium">Crypto Market Insights</p>
+                            </div>
+                            <div class="flex items-center space-x-3 fade-in-up delay-400">
+                                <i class="fas fa-headset text-xl sm:text-2xl text-btn-accent-from"></i>
+                                <p class="text-xs sm:text-sm text-primary-light font-medium">24/7 Dedicated Support</p>
+                            </div>
+                            <div class="flex items-center space-x-3 fade-in-up delay-500">
+                                <i class="fas fa-globe text-xl sm:text-2xl text-btn-green-from"></i>
+                                <p class="text-xs sm:text-sm text-primary-light font-medium">Global Accessibility</p>
+                            </div>
+                        </div>
+                        <a href="#contact" class="inline-block bg-btn-green hover:bg-btn-green-to text-white font-bold py-1.5 px-4 sm:py-2 sm:px-5 md:py-2.5 md:px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out fade-in-up delay-600 btn-green btn-glow text-xs sm:text-sm md:text-base">Get Started Today</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-12 sm:py-16 md:py-20 bg-secondary-green">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-12 text-center">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 fade-in-up">Our Comprehensive Services</h2>
+                <p class="text-xs sm:text-sm md:text-base lg:text-lg text-secondary-light mb-8 sm:mb-12 max-w-3xl mx-auto fade-in-up delay-100">
+                    From everyday banking to cutting-edge crypto investments, Greenleaf National Bank provides a full suite of services designed to meet your diverse financial needs.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-4 hover:border-icon-color transform hover:scale-105 hover:rotate-y-3 service-card-hover-effect fade-in-up delay-200">
+                        <div class="text-3xl sm:text-4xl text-icon-color mb-4 sm:mb-6">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4">Online Banking</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 sm:mb-6">
+                            Manage your accounts, transfer funds, pay bills, and track your spending with our intuitive online banking platform. Secure and convenient.
+                        </p>
+                        <a href="#" class="text-icon-color hover:text-secondary-light font-semibold flex items-center justify-center text-xs sm:text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-4 hover:border-border-color transform hover:scale-105 hover:rotate-y-3 service-card-hover-effect fade-in-up delay-300">
+                        <div class="text-3xl sm:text-4xl text-border-color mb-4 sm:mb-6">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4">Cryptocurrency Trading</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 sm:mb-6">
+                            Buy, sell, and trade a wide range of cryptocurrencies with real-time market data and advanced charting tools.
+                        </p>
+                        <a href="#" class="text-border-color hover:text-secondary-light font-semibold flex items-center justify-center text-xs sm:text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-4 hover:border-btn-green-from transform hover:scale-105 hover:rotate-y-3 service-card-hover-effect fade-in-up delay-400">
+                        <div class="text-3xl sm:text-4xl text-btn-green-from mb-4 sm:mb-6">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4">Wealth Management</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 sm:mb-6">
+                            Personalized financial advice and investment strategies to help you grow and protect your wealth.
+                        </p>
+                        <a href="#" class="text-btn-green-from hover:text-secondary-light font-semibold flex items-center justify-center text-xs sm:text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-4 hover:border-btn-accent-from transform hover:scale-105 hover:rotate-y-3 service-card-hover-effect fade-in-up delay-500">
+                        <div class="text-3xl sm:text-4xl text-btn-accent-from mb-4 sm:mb-6">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4">Loans & Credit</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 sm:mb-6">
+                            Flexible loan options and credit solutions tailored to your personal and business needs.
+                        </p>
+                        <a href="#" class="text-btn-accent-from hover:text-secondary-light font-semibold flex items-center justify-center text-xs sm:text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-4 hover:border-border-color transform hover:scale-105 hover:rotate-y-3 service-card-hover-effect fade-in-up delay-600">
+                        <div class="text-3xl sm:text-4xl text-border-color mb-4 sm:mb-6">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4">Business Solutions</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 sm:mb-6">
+                            Comprehensive banking and financial tools for businesses of all sizes, from startups to enterprises.
+                        </p>
+                        <a href="#" class="text-border-color hover:text-secondary-light font-semibold flex items-center justify-center text-xs sm:text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-4 hover:border-btn-red transform hover:scale-105 hover:rotate-y-3 service-card-hover-effect fade-in-up delay-700">
+                        <div class="text-3xl sm:text-4xl text-btn-red mb-4 sm:mb-6">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 sm:mb-4">Payment Solutions</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 sm:mb-6">
+                            Fast, secure, and easy payment processing for online and in-store transactions.
+                        </p>
+                        <a href="#" class="text-btn-red hover:text-secondary-light font-semibold flex items-center justify-center text-xs sm:text-sm">
+                            Learn More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="py-12 sm:py-16 md:py-20 bg-primary-green">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-12 text-center">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 fade-in-up">Simple Steps to Financial Freedom</h2>
+                <p class="text-xs sm:text-sm md:text-base lg:text-lg text-secondary-light mb-8 sm:mb-12 max-w-3xl mx-auto fade-in-up delay-100">
+                    Getting started with Greenleaf National Bank is easy. Follow these simple steps to unlock a world of financial possibilities.
+                </p>
+
+                <div class="relative flex flex-col items-center">
+                    <!-- The green line element was removed as requested -->
+
+                    <div class="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mb-10 sm:mb-12 fade-in-up delay-200">
+                        <div class="bg-icon-color text-white rounded-full h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 flex items-center justify-center text-sm sm:text-base md:text-lg font-bold flex-shrink-0 mb-3 sm:mb-0 md:mr-8 shadow-lg transform hover:scale-110 transition duration-300">1</div>
+                        <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl text-center md:text-left flex-grow transform hover:translate-x-2 transition duration-300">
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Create Your Account</h3>
+                            <p class="text-xs sm:text-sm text-secondary-light">Sign up in minutes with our secure and streamlined registration process. Provide your details and get ready to explore.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mb-10 sm:mb-12 fade-in-up delay-400">
+                        <div class="bg-border-color text-white rounded-full h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 flex items-center justify-center text-sm sm:text-base md:text-lg font-bold flex-shrink-0 mb-3 sm:mb-0 md:mr-8 shadow-lg md:order-2 transform hover:scale-110 transition duration-300">2</div>
+                        <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl text-center md:text-right flex-grow md:order-1 transform hover:-translate-x-2 transition duration-300">
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Fund Your Wallet</h3>
+                            <p class="text-xs sm:text-sm text-secondary-light">Easily deposit funds via bank transfer, credit/debit card, or transfer existing crypto. Your assets are secure from day one.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-center w-full max-w-4xl mb-10 sm:mb-12 fade-in-up delay-600">
+                        <div class="bg-btn-green-from text-white rounded-full h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 flex items-center justify-center text-sm sm:text-base md:text-lg font-bold flex-shrink-0 mb-3 sm:mb-0 md:mr-8 shadow-lg transform hover:scale-110 transition duration-300">3</div>
+                        <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl text-center md:text-left flex-grow transform hover:translate-x-2 transition duration-300">
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Start Banking & Trading</h3>
+                            <p class="text-xs sm:text-sm text-secondary-light">Access all our powerful features. Manage your bank accounts, invest in crypto, and achieve your financial goals with ease.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-12 sm:py-16 md:py-20 bg-secondary-green">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-12 text-center">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 fade-in-up">Why Choose Greenleaf National Bank?</h2>
+                <p class="text-xs sm:text-sm md:text-base lg:text-lg text-secondary-light mb-8 sm:mb-12 max-w-3xl mx-auto fade-in-up delay-100">
+                    Experience the next generation of financial services with features designed for your success and peace of mind.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+                    <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-left bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 hover:rotate-x-3 transition duration-300 fade-in-up delay-200">
+                        <div class="flex-shrink-0 mb-3 sm:mb-4 md:mb-0 md:mr-6 flex items-center">
+                            <i class="fas fa-lock text-4xl sm:text-5xl text-icon-color mr-3 sm:mr-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Unparalleled Security</h3>
+                            <p class="text-xs sm:text-sm text-secondary-light">
+                                Your assets are protected with state-of-the-art encryption, multi-factor authentication, and continuous fraud monitoring. We prioritize your safety.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-left bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 hover:rotate-x-3 transition duration-300 fade-in-up delay-300">
+                        <div class="flex-shrink-0 mb-3 sm:mb-4 md:mb-0 md:mr-6 flex items-center">
+                            <i class="fas fa-mobile-alt text-4xl sm:text-5xl text-border-color mr-3 sm:mr-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Intuitive Mobile App</h3>
+                            <p class="text-xs sm:text-sm text-secondary-light">
+                                Manage your finances on the go with our highly-rated mobile application, available for iOS and Android. Simple, fast, and powerful.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-left bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 hover:rotate-x-3 transition duration-300 fade-in-up delay-400">
+                        <div class="flex-shrink-0 mb-3 sm:mb-4 md:mb-0 md:mr-6 flex items-center">
+                            <i class="fas fa-rocket text-4xl sm:text-5xl text-btn-green-from mr-3 sm:mr-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Lightning-Fast Transactions</h3>
+                            <p class="text-xs sm:text-sm text-secondary-light">
+                                Experience instant transfers and rapid cryptocurrency trades with our optimized network infrastructure.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-left bg-card-green p-2 sm:p-3 rounded-xl shadow-xl transform hover:scale-105 hover:rotate-x-3 transition duration-300 fade-in-up delay-500">
+                        <div class="flex-shrink-0 mb-3 sm:mb-4 md:mb-0 md:mr-6 flex items-center">
+                            <i class="fas fa-dollar-sign text-4xl sm:text-5xl text-btn-accent-from mr-3 sm:mr-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-2">Competitive Fees</h3>
+                            <p class="text-xs sm:text-sm text-secondary-light">
+                                Enjoy transparent and competitive fees across all our services, maximizing your returns and minimizing costs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 sm:py-16 md:py-20 bg-gradient-to-r from-btn-green-from to-btn-green-to text-white text-center section-parallax-bg" style="background-image: url('https://cdn.pixabay.com/photo/2017/11/01/11/34/bank-2907728_640.jpg');">
+            <div class="bg-primary-green bg-opacity-60 py-10 sm:py-12 md:py-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-12">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-6 fade-in-up">Ready to Transform Your Finances?</h2>
+                    <p class="text-xs sm:text-sm md:text-base lg:text-lg mb-8 sm:mb-10 fade-in-up delay-150">Join Greenleaf National Bank today and experience the future of banking and crypto.</p>
+                    <a href="#contact" class="inline-block bg-white text-btn-green-to hover:bg-gray-200 font-bold py-2 px-5 sm:py-2.5 sm:px-6 md:py-3 md:px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out text-xs sm:text-sm md:text-base">
+                        Get Started Now
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="py-12 sm:py-16 md:py-20 bg-primary-green">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-12 text-center">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 fade-in-up">Latest News & Updates</h2>
+                <p class="text-xs sm:text-sm md:text-base lg:text-lg text-secondary-light mb-8 sm:mb-12 max-w-3xl mx-auto fade-in-up delay-100">
+                    Stay informed with the latest developments from Greenleaf National Bank and the world of finance.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-icon-color transform hover:scale-105 transition duration-300 fade-in-up delay-200">
+                        <img src="https://cdn.pixabay.com/photo/2022/05/10/04/10/money-transfer-7185873_640.png" alt="News Article Image" class="rounded-lg mb-4 w-full h-auto object-cover">
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 text-left">Greenleaf National Bank Launches New Digital Wallet Features</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 text-left">
+                            We're excited to announce enhanced features for our digital wallet, making managing your funds even easier and more secure.
+                        </p>
+                        <a href="#" class="text-icon-color hover:text-secondary-light font-semibold flex items-center justify-end text-xs sm:text-sm">
+                            Read More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-border-color transform hover:scale-105 transition duration-300 fade-in-up delay-300">
+                        <img src="https://cdn.pixabay.com/photo/2021/10/17/02/40/chart-6716410_640.jpg" alt="News Article Image" class="rounded-lg mb-4 w-full h-auto object-cover">
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 text-left">Understanding the Latest Trends in Cryptocurrency Markets</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 text-left">
+                            Our experts break down the recent market shifts and what they mean for your crypto investments.
+                        </p>
+                        <a href="#" class="text-border-color hover:text-secondary-light font-semibold flex items-center justify-end text-xs sm:text-sm">
+                            Read More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-transparent hover:border-btn-green-from transform hover:scale-105 transition duration-300 fade-in-up delay-400">
+                        <img src="https://cdn.pixabay.com/photo/2017/02/08/13/18/scam-2048851_640.jpg" alt="News Article Image" class="rounded-lg mb-4 w-full h-auto object-cover">
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-3 text-left">Greenleaf National Bank Enhances Security Protocols</h3>
+                        <p class="text-xs sm:text-sm text-secondary-light mb-4 text-left">
+                            Your security is our top priority. Learn about our latest advancements in protecting your financial data.
+                        </p>
+                        <a href="#" class="text-btn-green-from hover:text-secondary-light font-semibold flex items-center justify-end text-xs sm:text-sm">
+                            Read More <i class="fas fa-arrow-right ml-2 text-xs sm:text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-12 sm:py-16 md:py-20 bg-secondary-green">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-12 text-center">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 sm:mb-6 fade-in-up">Get in Touch</h2>
+                <p class="text-xs sm:text-sm md:text-base lg:text-lg text-secondary-light mb-8 sm:mb-12 max-w-3xl mx-auto fade-in-up delay-100">
+                    Have questions or need assistance? Our dedicated support team is here to help. Reach out to us anytime.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-border-color text-left fade-in-up delay-200">
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-4">Send Us a Message</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-secondary-light text-xs sm:text-sm font-semibold mb-2">Your Name</label>
+                                <input type="text" id="name" class="w-full px-2 py-1.5 border border-border-color rounded-lg bg-primary-green text-primary-light placeholder-secondary-light focus:outline-none focus:ring-2 focus:ring-icon-color text-xs sm:text-sm" placeholder="your name">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-secondary-light text-xs sm:text-sm font-semibold mb-2">Your Email</label>
+                                <input type="email" id="email" class="w-full px-2 py-1.5 border border-border-color rounded-lg bg-primary-green text-primary-light placeholder-secondary-light focus:outline-none focus:ring-2 focus:ring-icon-color text-xs sm:text-sm" placeholder="your email">
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-secondary-light text-xs sm:text-sm font-semibold mb-2">Subject</label>
+                                <input type="text" id="subject" class="w-full px-2 py-1.5 border border-border-color rounded-lg bg-primary-green text-primary-light placeholder-secondary-light focus:outline-none focus:ring-2 focus:ring-icon-color text-xs sm:text-sm" placeholder="Inquiry about services">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-secondary-light text-xs sm:text-sm font-semibold mb-2">Your Message</label>
+                                <textarea id="message" rows="5" class="w-full px-2 py-1.5 border border-border-color rounded-lg bg-primary-green text-primary-light placeholder-secondary-light focus:outline-none focus:ring-2 focus:ring-icon-color text-xs sm:text-sm" placeholder="Type your message here..."></textarea>
+                            </div>
+                            <button type="submit" class="bg-btn-green hover:bg-btn-green-to text-white font-bold py-1.5 px-4 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out btn-green btn-glow flex items-center justify-center text-xs sm:text-sm">
+                                Send Message <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-card-green p-2 sm:p-3 rounded-xl shadow-xl border border-border-color text-left fade-in-up delay-300">
+                        <h3 class="text-base sm:text-lg font-bold text-white mb-4">Contact Information</h3>
+                        <div class="space-y-4 text-secondary-light text-xs sm:text-sm">
+                            <p class="flex items-center"><i class="fas fa-map-marker-alt text-icon-color mr-3 text-base"></i> 1608 Day St Greenleaf WI 54126</p>
+                            <p class="flex items-center"><i class="fas fa-envelope text-icon-color mr-3 text-base"></i> globalleafnationalbk@gmail.com</p>
+                        </div>
+                        <div class="mt-8">
+                            <h3 class="text-base sm:text-lg font-bold text-white mb-4">Follow Us</h3>
+                            <div class="flex space-x-4 justify-center md:justify-start">
+                                <a href="#" class="text-icon-color hover:text-border-color text-2xl sm:text-3xl transition duration-300"><i class="fab fa-facebook-square"></i></a>
+                                <a href="#" class="text-icon-color hover:text-border-color text-2xl sm:text-3xl transition duration-300"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-icon-color hover:text-border-color text-2xl sm:text-3xl transition duration-300"><i class="fab fa-instagram-square"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-secondary-green py-2 sm:py-3 text-center text-secondary-light text-xs sm:text-sm mt-auto">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Greenleaf National Bank. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const loadingBar = document.getElementById('loading-bar');
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (progress <= 100) {
+                    loadingBar.style.width = `${progress}%`;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 100);
+
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.classList.add('preloader-hidden');
+                    preloader.addEventListener('transitionend', () => {
+                        preloader.remove();
+                    });
+                }
+            }, 1500);
+        });
+
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        document.getElementById('next-slide').addEventListener('click', nextSlide);
+        document.getElementById('prev-slide').addEventListener('click', prevSlide);
+
+        let slideInterval = setInterval(nextSlide, 5000);
+
+        document.getElementById('hero').addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        document.getElementById('hero').addEventListener('mouseleave', () => {
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        const animateElements = document.querySelectorAll('.fade-in-up, .slide-in-left, .scale-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        const statisticsCounters = document.querySelectorAll('#statistics [data-target]');
+
+        const counterObserverOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumber(entry.target, parseFloat(entry.target.dataset.target));
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, counterObserverOptions);
+
+        function animateNumber(element, target) {
+            let start = 0;
+            const duration = 2000;
+            const startTime = performance.now();
+
+            function updateNumber(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                let currentValue;
+
+                if (target % 1 !== 0) {
+                    currentValue = (start + progress * (target - start)).toFixed(1);
+                } else {
+                    currentValue = Math.floor(start + progress * (target - start));
+                }
+
+                element.textContent = currentValue;
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            }
+            requestAnimationFrame(updateNumber);
+        }
+
+        statisticsCounters.forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // The adjustHowItWorksLine function and its event listeners were removed as requested.
+    </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/688b57b0fb134f1927295159/1j1g4t3jd';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>

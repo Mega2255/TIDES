@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - GreenLeaf National Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --bg-primary: #0A2E20; /* Darker Forest Green */
+            --bg-secondary: #1A4D35; /* Medium Forest Green */
+            --bg-card: #2B684B; /* Slightly Lighter Green for cards */
+            --text-primary: #E6F0E6; /* Off-white / Light Greenish Gray */
+            --text-secondary: #A0C0A0; /* Muted Greenish Gray */
+            --border-color: #4CAF50; /* Vibrant Green Accent */
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --btn-green-from: #4CAF50; /* Green 500 */
+            --btn-green-to: #388E3C; /* Green 700 */
+            --btn-accent-from: #60A5FA; /* Blue for secondary actions */
+            --btn-accent-to: #2563EB; /* Darker Blue */
+            --btn-red: #dc2626; /* Red 600 */
+            --btn-red-hover: #b91c1c; /* Red 700 */
+            --icon-color: #81C784; /* Light Green for icons */
+            --hero-overlay: rgba(0, 0, 0, 0.6); /* Dark overlay for hero images */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .bg-primary-green { background-color: var(--bg-primary); }
+        .bg-secondary-green { background-color: var(--bg-secondary); }
+        .bg-card-green { background-color: var(--bg-card); }
+        .text-primary-light { color: var(--text-primary); }
+        .text-secondary-light { color: var(--text-secondary); }
+        .border-green-accent { border-color: var(--border-color); }
+        .shadow-deep { box-shadow: 0 10px 25px var(--shadow-color); }
+
+        .btn-green {
+            background-image: linear-gradient(to right, var(--btn-green-from), var(--btn-green-to));
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        .btn-green:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        .btn-accent {
+            background-image: linear-gradient(to right, var(--btn-accent-from), var(--btn-accent-to));
+            box-shadow: 0 5px 15px rgba(96, 165, 250, 0.4);
+        }
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(96, 165, 250, 0.6);
+        }
+
+        .text-icon-green { color: var(--icon-color); }
+        .border-icon-green { border-color: var(--icon-color); }
+
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.7);
+        }
+        .btn-glow-amber {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+        }
+        .btn-glow-amber:hover {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
+        }
+        .preloader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #finflow-text {
+            animation: text-pop-in 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, text-glow 2s infinite alternate;
+            transform: scale(0.8);
+            opacity: 0;
+            display: block;
+        }
+        @keyframes text-pop-in {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 5px rgba(76, 175, 80, 0.5), 0 0 10px rgba(129, 199, 132, 0.3); }
+            100% { text-shadow: 0 0 15px rgba(76, 175, 80, 0.8), 0 0 25px rgba(129, 199, 132, 0.5); }
+        }
+        @keyframes ping-slow {
+            0% { transform: scale(0.8); opacity: 0.75; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+        .animate-ping-slow {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        .animate-ping-slow-delay {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite 1s;
+        }
+        .animate-spin-fast {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #loading-bar {
+            animation: loading-bar-pulse 1.5s infinite alternate;
+        }
+        @keyframes loading-bar-pulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-primary-green text-primary-light min-h-screen flex items-center justify-center">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="flex flex-col items-center">
+            <div class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 relative overflow-hidden text-center">
+                <span id="finflow-text" class="block">Greenleaf National Bank</span>
+            </div>
+            <div class="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mb-8">
+                <div class="absolute w-full h-full rounded-full border-4 border-border-color animate-ping-slow opacity-75"></div>
+                <div class="absolute w-full h-full rounded-full border-4 border-icon-color animate-ping-slow-delay opacity-75"></div>
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-btn-green-from to-btn-green-to flex items-center justify-center text-lg sm:text-xl font-bold">
+                    <i class="fas fa-leaf animate-spin-fast"></i>
+                </div>
+            </div>
+            <div class="w-48 sm:w-64 h-3 bg-secondary-green rounded-full overflow-hidden shadow-inner">
+                <div id="loading-bar" class="h-full bg-gradient-to-r from-icon-color to-btn-green-to w-0 rounded-full transition-all duration-1000 ease-in-out"></div>
+            </div>
+            <p class="text-sm sm:text-lg text-secondary-light mt-4">Initializing secure connection...</p>
+        </div>
+    </div>
+
+    <div class="w-full max-w-md p-8 bg-secondary-green rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold mb-6 text-center text-primary-light">User Login</h2>
+        <form id="login-form" class="space-y-4">
+            <div>
+                <label class="block mb-1 text-secondary-light">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-2 border border-border-color rounded bg-card-green text-primary-light placeholder-text-secondary" required>
+            </div>
+            <div>
+                <label class="block mb-1 text-secondary-light">Password</label>
+                <input type="password" id="password" class="w-full px-4 py-2 border border-border-color rounded bg-card-green text-primary-light placeholder-text-secondary" required>
+            </div>
+            <div class="flex justify-end space-x-4 mt-4">
+                <button type="button" id="cancel-btn" class="px-4 py-2 bg-secondary-green rounded hover:bg-card-green text-primary-light">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-btn-green rounded hover:bg-btn-green-to text-white btn-green">Login</button>
+            </div>
+
+<!-- In your login.html file -->
+<p class="text-center text-gray-400 text-sm mt-4">
+    <a href="forgot_password.html" class="text-cyan-500 hover:underline font-medium">Forgot Password?</a>
+</p>
+
+        </form>
+    </div>
+
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAAH3xgk4pdBWmqp-Dsjhk48KMycRaU18",
+            authDomain: "paralegal-web-app.firebaseapp.com",
+            databaseURL: "https://paralegal-web-app-default-rtdb.firebaseio.com",
+            projectId: "paralegal-web-app",
+            storageBucket: "paralegal-web-app.firebasestorage.app",
+            messagingSenderId: "966897791344",
+            appId: "1:966897791344:web:83ca8aceb0426a4b925fb5",
+            measurementId: "G-ZHKTRGZSJK"
+        };
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                alert('glnb says Login successfully!');
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed: ' + error.message);
+            }
+        });
+
+        document.getElementById('cancel-btn').addEventListener('click', () => {
+            document.getElementById('login-form').reset();
+        });
+
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const loadingBar = document.getElementById('loading-bar');
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (progress <= 100) {
+                    loadingBar.style.width = `${progress}%`;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 100);
+
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.classList.add('preloader-hidden');
+                    preloader.addEventListener('transitionend', () => {
+                        preloader.remove();
+                    });
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

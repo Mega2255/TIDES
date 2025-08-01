@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenleaf National Bank - User Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --bg-primary: #0A2E20; /* Darker Forest Green */
+            --bg-secondary: #1A4D35; /* Medium Forest Green */
+            --bg-card: #2B684B; /* Slightly Lighter Green for cards */
+            --text-primary: #E6F0E6; /* Off-white / Light Greenish Gray */
+            --text-secondary: #A0C0A0; /* Muted Greenish Gray */
+            --border-color: #4CAF50; /* Vibrant Green Accent */
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --btn-green-from: #4CAF50; /* Green 500 */
+            --btn-green-to: #388E3C; /* Green 700 */
+            --btn-accent-from: #60A5FA; /* Blue for secondary actions, kept for distinct action */
+            --btn-accent-to: #2563EB; /* Darker Blue, kept for distinct action */
+            --btn-red: #dc2626; /* Red 600 */
+            --btn-red-hover: #b91c1c; /* Red 700 */
+            --balance-green: #4ade80; /* green-400 */
+            --balance-amber: #fcd34d; /* amber-400 */
+            --balance-purple: #a78bfa; /* purple-440 */
+            --icon-cyan: #81C784; /* Light Green for general icons */
+            --icon-purple: #a855f7; /* Purple for specific icons */
+            --icon-amber: #f59e0b; /* Amber for specific icons */
+            --icon-yellow: #facc15; /* Yellow for specific icons */
+        }
+
+        /* Light Theme (Adjusted to green-friendly light tones) */
+        body.theme-light {
+            --bg-primary: #e6f0e6; /* Light Greenish Gray */
+            --bg-secondary: #c8e6c9; /* Lighter Green */
+            --bg-card: #ffffff;
+            --text-primary: #0A2E20; /* Darker Forest Green */
+            --text-secondary: #1A4D35; /* Medium Forest Green */
+            --border-color: #81C784; /* Light Green */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --btn-green-from: #4CAF50;
+            --btn-green-to: #388E3C;
+            --btn-accent-from: #60A5FA;
+            --btn-accent-to: #2563EB;
+            --btn-red: #ef4444;
+            --btn-red-hover: #dc2626;
+            --balance-green: #22c55e;
+            --balance-amber: #f97316;
+            --balance-purple: #8b5cf6;
+            --icon-cyan: #4CAF50; /* Green for general icons in light theme */
+            --icon-purple: #a855f7;
+            --icon-amber: #f59e0b;
+            --icon-yellow: #eab308;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scrollbar on body */
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.5s ease, color 0.5s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Apply theme variables to Tailwind-like classes */
+        .bg-gray-900 { background-color: var(--bg-primary); }
+        .bg-gray-800 { background-color: var(--bg-secondary); }
+        .bg-gray-700 { background-color: var(--bg-card); } /* Adjusted to card background for inputs/selects */
+        .bg-gray-600 { background-color: var(--bg-card); } /* Adjusted for buttons, if used */
+        .text-gray-100 { color: var(--text-primary); }
+        .text-gray-300 { color: var(--text-secondary); }
+        .text-gray-400 { color: var(--text-secondary); }
+        .border-gray-700 { border-color: var(--border-color); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color); }
+        .shadow-2xl { box-shadow: 0 25px 50px -12px var(--shadow-color); }
+
+        /* Specific colors that don't change with theme (e.g., brand colors or specific status colors) */
+        .text-cyan-500 { color: var(--icon-cyan); }
+        .text-purple-500 { color: var(--icon-purple); }
+        .text-amber-500 { color: var(--icon-amber); }
+        .text-yellow-400 { color: var(--icon-yellow); }
+
+        .bg-cyan-600 { background-color: var(--btn-green-from); } /* Mapped to green theme */
+        .hover\:bg-cyan-700:hover { background-color: var(--btn-green-to); } /* Mapped to green theme */
+        .bg-red-600 { background-color: var(--btn-red); }
+        .hover\:bg-red-700:hover { background-color: var(--btn-red-hover); }
+
+        .bg-gradient-to-r.from-cyan-600 { background-image: linear-gradient(to right, var(--btn-green-from), var(--btn-green-to)); } /* Mapped to green theme */
+        .bg-gradient-to-r.from-purple-600 { background-image: linear-gradient(to right, var(--btn-accent-from), var(--btn-accent-to)); } /* Mapped to accent blue */
+
+        .text-green-400 { color: var(--balance-green); }
+        .text-amber-400 { color: var(--balance-amber); }
+        .text-purple-400 { color: var(--balance-purple); }
+
+
+        /* Preloader styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary)); /* Dark gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hide preloader when loaded */
+        .preloader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* FinFlow text animation */
+        #finflow-text {
+            animation: text-pop-in 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, text-glow 2s infinite alternate;
+            transform: scale(0.8); /* Start slightly smaller */
+            opacity: 0;
+            display: block; /* Ensure it's a block for animation */
+            color: var(--text-primary); /* Ensure text color respects theme */
+        }
+
+        @keyframes text-pop-in {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 5px rgba(76, 175, 80, 0.5), 0 0 10px rgba(129, 199, 132, 0.3); } /* Green glow */
+            100% { text-shadow: 0 0 15px rgba(76, 175, 80, 0.8), 0 0 25px rgba(129, 199, 132, 0.5); }
+        }
+
+        /* New Preloader Animations for pulsing circle */
+        @keyframes ping-slow {
+            0% { transform: scale(0.8); opacity: 0.75; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        .animate-ping-slow {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        .animate-ping-slow-delay {
+            animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite 1s; /* Delayed start */
+        }
+
+        @keyframes spin { /* Renamed from spin-fast to just spin for consistency with other files */
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .animate-spin-fast { /* Kept class name for consistency */
+            animation: spin 1s linear infinite;
+        }
+
+        /* Loading bar animation */
+        #loading-bar {
+            animation: loading-bar-pulse 1.5s infinite alternate;
+        }
+
+        @keyframes loading-bar-pulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Custom glow effect for buttons */
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5); /* Mapped to green glow */
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(76, 175, 80, 0.7);
+        }
+        .btn-glow-amber {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5); /* amber-500 with alpha */
+        }
+        .btn-glow-amber:hover {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--border-color)); /* Green gradient */
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            text-align: center;
+            transform: translateY(-50px) scale(0.9);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.4s ease-out;
+            border: 1px solid var(--border-color);
+            max-width: 95%;
+            width: auto;
+            min-width: 280px;
+            color: var(--text-primary);
+        }
+        @media (min-width: 640px) {
+            .modal-content {
+                padding: 2rem;
+                max-width: 450px;
+            }
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* Specific styles for the "Contact Support" modal */
+        #contact-support-modal .modal-content, #restricted-account-modal .modal-content {
+            background: linear-gradient(135deg, #a02020, #e04040); /* Reddish gradient, kept as is */
+            border: 1px solid #c03030;
+        }
+        #contact-support-modal .modal-content h3, #restricted-account-modal .modal-content h3 {
+            color: #fff;
+        }
+        #contact-support-modal .modal-content p, #restricted-account-modal .modal-content p {
+            color: #f0f0f0;
+        }
+
+        /* Animated particles for dashboard background */
+        .dashboard-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1; /* Behind content */
+        }
+
+        .dashboard-particle {
+            position: absolute;
+            background-color: rgba(129, 199, 132, 0.2); /* Light Green particle */
+            border-radius: 50%;
+            animation: float-particle 20s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        .dashboard-particle:nth-child(1) { width: 10px; height: 10px; left: 5%; top: 10%; animation-delay: 0s; }
+        .dashboard-particle:nth-child(2) { width: 15px; height: 15px; left: 20%; top: 40%; animation-delay: 3s; background-color: rgba(76, 175, 80, 0.2); } /* Darker Green particle */
+        .dashboard-particle:nth-child(3) { width: 8px; height: 8px; left: 40%; top: 5%; animation-delay: 6s; }
+        .dashboard-particle:nth-child(4) { width: 12px; height: 12px; left: 60%; top: 70%; animation-delay: 9s; background-color: rgba(129, 199, 132, 0.2); }
+        .dashboard-particle:nth-child(5) { width: 18px; height: 18px; left: 80%; top: 20%; animation-delay: 12s; }
+        .dashboard-particle:nth-child(6) { width: 7px; height: 7px; left: 95%; top: 50%; animation-delay: 15s; background-color: rgba(76, 175, 80, 0.2); }
+        .dashboard-particle:nth-child(7) { width: 11px; height: 11px; left: 15%; top: 85%; animation-delay: 18s; }
+
+        @keyframes float-particle {
+            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translateY(-20px) translateX(10px) scale(1); }
+            80% { opacity: 1; transform: translateY(20px) translateX(-10px) scale(1); }
+            100% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+        }
+
+        /* Fade-in animation for main content */
+        .fade-in-content {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fade-in-up-content 1s ease-out forwards;
+        }
+
+        @keyframes fade-in-up-content {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card hover effects */
+        .dashboard-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color); /* Added default border */
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+            border-color: var(--icon-cyan);
+        }
+        .dashboard-card.balance-card:hover {
+             border-color: var(--balance-green);
+        }
+        .dashboard-card.profile-card:hover {
+             border-color: var(--btn-accent-from); /* Mapped to accent blue */
+        }
+        .dashboard-card.crypto-card:hover {
+             border-color: var(--icon-amber);
+        }
+        .dashboard-card.activity-card:hover {
+             border-color: var(--icon-purple);
+        }
+
+        /* Transaction item hover */
+        .transaction-item, .crypto-item {
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Added border-color to transition */
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color); /* Added default border */
+            border-radius: 0.5rem; /* Added border-radius */
+            padding: 1rem; /* Added padding */
+        }
+        .transaction-item:hover, .crypto-item:hover {
+            background-color: var(--bg-card); /* Mapped to card background */
+            transform: translateX(5px);
+            border-color: var(--icon-cyan); /* Highlight border on hover */
+        }
+
+        /* Loading Spinner for Transfer */
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Balance visibility toggle */
+        .balance-hidden {
+            filter: blur(4px);
+            user-select: none;
+            pointer-events: none;
+            color: transparent !important;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+        .balance-hidden::before {
+            content: '••••••';
+            color: var(--text-primary);
+            filter: none;
+        }
+        .balance-toggle-btn {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .balance-toggle-btn:hover {
+            color: var(--icon-cyan);
+        }
+
+        /* Specific styles for input fields to ensure dark text on light background */
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        select,
+        textarea {
+            background-color: #f8f8f8; /* A very light gray */
+            color: #333; /* Dark gray text */
+            border: 1px solid #ccc; /* Neutral border */
+            transition: all 0.3s ease; /* Smooth transition for focus */
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="password"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--icon-cyan); /* Use a theme color for focus highlight */
+            box-shadow: 0 0 0 2px rgba(129, 199, 132, 0.5); /* Soft glow */
+        }
+
+        /* Adjust placeholder color */
+        input::placeholder,
+        select::placeholder,
+        textarea::placeholder {
+            color: #888;
+        }
+    </style>
+</head>
+<body class="bg-primary-green text-primary-light min-h-screen flex flex-col">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="flex flex-col items-center">
+            <div class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 relative overflow-hidden">
+                <span id="finflow-text" class="block">Greenleaf National Bank</span>
+            </div>
+            <div class="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mb-8">
+                <div class="absolute w-full h-full rounded-full border-4 border-border-color animate-ping-slow opacity-75"></div>
+                <div class="absolute w-full h-full rounded-full border-4 border-icon-cyan animate-ping-slow-delay opacity-75"></div>
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-btn-green-from to-btn-green-to flex items-center justify-center text-lg sm:text-xl font-bold">
+                    <i class="fas fa-sync-alt animate-spin-fast"></i>
+                </div>
+            </div>
+            <div class="w-48 sm:w-64 h-3 bg-secondary-green rounded-full overflow-hidden shadow-inner">
+                <div id="loading-bar" class="h-full bg-gradient-to-r from-icon-cyan to-btn-green-to w-0 rounded-full transition-all duration-1000 ease-in-out"></div>
+            </div>
+            <p class="text-sm sm:text-lg text-secondary-light mt-4">Loading your secure dashboard...</p>
+        </div>
+    </div>
+
+    <!-- Header/Navigation -->
+    <header class="bg-secondary-green bg-opacity-90 backdrop-blur-sm sticky top-0 w-full z-50 shadow-lg">
+        <nav class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center">
+                <img src="https://placehold.co/120x40/1A4D35/E6F0E6?text=Greenleaf+Bank" alt="Greenleaf National Bank Logo" class="h-7 md:h-9 mr-2">
+                <span class="text-xl sm:text-2xl font-bold text-primary-light hidden sm:block">Greenleaf National Bank</span>
+            </a>
+            <!-- User Info & Logout -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Theme Selector -->
+                <div class="relative inline-block text-left">
+                    <button type="button" id="theme-dropdown-button" class="inline-flex justify-center w-full rounded-md border border-border-color shadow-sm px-3 py-1.5 sm:px-4 sm:py-2 bg-card-green text-xs sm:text-sm font-medium text-primary-light hover:bg-secondary-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-secondary focus:ring-icon-cyan" aria-expanded="true" aria-haspopup="true">
+                        <i class="fas fa-palette mr-1 sm:mr-2"></i> <span class="hidden sm:inline">Theme</span>
+                        <svg class="-mr-1 ml-1 h-4 w-4 sm:h-5 sm:w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <div id="theme-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-36 sm:w-40 rounded-md shadow-lg bg-card-green ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="theme-dropdown-button" tabindex="-1">
+                        <div class="py-1" role="none">
+                            <button id="theme-dark-btn" class="text-primary-light block px-4 py-2 text-sm hover:bg-secondary-green w-full text-left" role="menuitem" tabindex="-1">
+                                <i class="fas fa-moon mr-2"></i> Dark Theme
+                            </button>
+                            <button id="theme-light-btn" class="text-primary-light block px-4 py-2 text-sm hover:bg-secondary-green w-full text-left" role="menuitem" tabindex="-1">
+                                <i class="fas fa-sun mr-2"></i> Light Theme
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Button -->
+                <button id="profile-view-btn" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-card-green hover:bg-secondary-green text-primary-light text-sm sm:text-base font-semibold transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-secondary focus:ring-icon-cyan flex items-center">
+                    <i class="fas fa-user-circle mr-1 sm:mr-2"></i> <span id="display-username-button-text">Profile</span>
+                </button>
+
+                <button id="logout-btn" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-btn-red hover:bg-btn-red-hover text-primary-light text-sm sm:text-base font-semibold transition duration-300 focus:outline-none focus:ring-2 focus:ring-btn-red flex items-center">
+                    <i class="fas fa-sign-out-alt mr-1 sm:mr-2"></i><span class="hidden sm:inline">Logout</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 relative">
+        <!-- Animated Particles Background -->
+        <div class="dashboard-particles">
+            <div class="dashboard-particle"></div>
+            <div class="dashboard-particle"></div>
+            <div class="dashboard-particle"></div>
+            <div class="dashboard-particle"></div>
+            <div class="dashboard-particle"></div>
+            <div class="dashboard-particle"></div>
+            <div class="dashboard-particle"></div>
+        </div>
+
+        <div id="dashboard-content" class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 relative z-10 fade-in-content">
+
+            <!-- Left Column: Balances & Quick Actions -->
+            <div class="lg:col-span-2 space-y-6 md:space-y-8">
+                <!-- Balance Overview Card -->
+                <div class="dashboard-card balance-card p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl border">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-light mb-4 sm:mb-6 flex items-center">
+                        <i class="fas fa-wallet text-icon-cyan mr-2 sm:mr-3"></i> Your Balances
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                        <!-- USD Balance -->
+                        <div class="bg-primary-green p-4 sm:p-6 rounded-lg shadow-inner border border-border-color flex flex-col items-start">
+                            <p class="text-secondary-light text-base sm:text-lg mb-1 sm:mb-2 flex justify-between w-full">
+                                <span>USD Balance</span>
+                                <button class="balance-toggle-btn text-secondary-light hover:text-icon-cyan" data-balance-type="usd">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </p>
+                            <p id="usd-balance" class="text-4xl sm:text-5xl font-bold text-balance-green">$0.00</p>
+                            <p class="text-xs sm:text-sm text-secondary-light mt-1 sm:mt-2">Available funds for transactions.</p>
+                        </div>
+                        <!-- Crypto Balance -->
+                        <div class="bg-primary-green p-4 sm:p-6 rounded-lg shadow-inner border border-border-color flex flex-col items-start">
+                            <p class="text-secondary-light text-base sm:text-lg mb-1 sm:mb-2 flex justify-between w-full">
+                                <span>Crypto Value</span>
+                                <button class="balance-toggle-btn text-secondary-light hover:text-icon-cyan" data-balance-type="total-crypto">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </p>
+                            <p id="crypto-balance" class="text-4xl sm:text-5xl font-bold text-balance-amber">$0.00</p>
+                            <p class="text-xs sm:text-sm text-secondary-light mt-1 sm:mt-2">Total value of all crypto holdings.</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                        <button id="deposit-crypto-btn" class="flex items-center justify-center px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-btn-green-from to-btn-green-to text-primary-light rounded-full text-sm sm:text-base font-semibold shadow-lg hover:from-btn-green-to hover:to-btn-green-from transition duration-300 btn-glow">
+                            <i class="fas fa-coins mr-2 sm:mr-3"></i> Convert Crypto to USD
+                        </button>
+                        <button id="transfer-out-btn" class="flex items-center justify-center px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-btn-accent-from to-btn-accent-to text-primary-light rounded-full text-sm sm:text-base font-semibold shadow-lg hover:from-btn-accent-to hover:to-btn-accent-from transition duration-300 btn-glow">
+                            <i class="fas fa-paper-plane mr-2 sm:mr-3"></i> Transfer Out
+                        </button>
+                        <button id="view-transactions-btn" class="flex items-center justify-center px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-bg-card to-secondary-green text-primary-light rounded-full text-sm sm:text-base font-semibold shadow-lg hover:from-secondary-green hover:to-bg-card transition duration-300">
+                            <i class="fas fa-history mr-2 sm:mr-3"></i> View Transactions
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity/Transactions -->
+                <div class="dashboard-card activity-card p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl border">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-light mb-4 sm:mb-6 flex items-center">
+                        <i class="fas fa-clock-rotate-left text-icon-purple mr-2 sm:mr-3"></i> Recent Activity
+                    </h2>
+                    <div id="transactions-list" class="space-y-3 sm:space-y-4">
+                        <p class="text-secondary-light text-sm sm:text-base text-center py-4" id="no-transactions-message">No recent transactions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: User Profile & Crypto Holdings -->
+            <div class="space-y-6 md:space-y-8">
+                <!-- User Profile Card (Basic Info) -->
+                <div class="dashboard-card profile-card p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl border">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-light mb-4 sm:mb-6 flex items-center">
+                        <i class="fas fa-user-circle text-icon-cyan mr-2 sm:mr-3"></i> My Profile
+                    </h2>
+                    <div class="space-y-3 sm:space-y-4 text-secondary-light text-sm sm:text-base">
+                        <p><span class="font-semibold text-primary-light">Full Name:</span> <span id="profile-full-name">Loading...</span></p>
+                        <p><span class="font-semibold text-primary-light">Username:</span> <span id="profile-username">Loading...</span></p>
+                        <p><span class="font-semibold text-primary-light">Email:</span> <span id="profile-email">Loading...</span></p>
+                        <p><span class="font-semibold text-primary-light">Phone:</span> <span id="profile-phone">Loading...</span></p>
+                        <p><span class="font-semibold text-primary-light">Sex:</span> <span id="profile-sex">Loading...</span></p>
+                    </div>
+                </div>
+
+                <!-- Crypto Holdings -->
+                <div class="dashboard-card crypto-card p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl border">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-light mb-4 sm:mb-6 flex items-center">
+                        <i class="fas fa-chart-area text-icon-amber mr-2 sm:mr-3"></i> Crypto Holdings
+                    </h2>
+                    <div id="crypto-holdings-list" class="space-y-3 sm:space-y-4">
+                        <p class="text-secondary-light text-sm sm:text-base text-center py-4" id="no-crypto-message">No crypto holdings.</p>
+                    </div>
+
+                    <!-- New: Individual Crypto Balances Section -->
+                    <div class="mt-5 pt-3 sm:mt-6 sm:pt-4 border-t border-border-color">
+                        <h3 class="text-xl sm:text-2xl font-bold text-primary-light mb-3 sm:mb-4 flex items-center">
+                            <i class="fas fa-coins text-icon-yellow mr-1 sm:mr-2"></i> Individual Balances
+                        </h3>
+                        <div class="grid grid-cols-1 gap-3 sm:gap-4">
+                            <!-- Bitcoin Balance -->
+                            <div class="bg-primary-green p-3 sm:p-4 rounded-lg shadow-inner border border-border-color flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fab fa-bitcoin text-icon-amber text-xl sm:text-2xl mr-2 sm:mr-3"></i>
+                                    <div>
+                                        <p class="text-primary-light font-medium text-sm sm:text-base">Bitcoin (BTC)</p>
+                                        <p id="bitcoin-balance-amount" class="text-secondary-light text-xs sm:text-sm">0.00 BTC</p>
+                                    </div>
+                                </div>
+                                <p id="bitcoin-balance-usd" class="text-balance-amber font-bold flex items-center text-base sm:text-lg">
+                                    <span class="mr-1 sm:mr-2">$0.00</span>
+                                    <button class="balance-toggle-btn text-secondary-light hover:text-icon-cyan" data-balance-type="bitcoin-usd">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </p>
+                            </div>
+                            <!-- Ethereum Balance -->
+                            <div class="bg-primary-green p-3 sm:p-4 rounded-lg shadow-inner border border-border-color flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fab fa-ethereum text-icon-purple text-xl sm:text-2xl mr-2 sm:mr-3"></i>
+                                    <div>
+                                        <p class="text-primary-light font-medium text-sm sm:text-base">Ethereum (ETH)</p>
+                                        <p id="ethereum-balance-amount" class="text-secondary-light text-xs sm:text-sm">0.00 ETH</p>
+                                    </div>
+                                </div>
+                                <p id="ethereum-balance-usd" class="text-balance-purple font-bold flex items-center text-base sm:text-lg">
+                                    <span class="mr-1 sm:mr-2">$0.00</span>
+                                    <button class="balance-toggle-btn text-secondary-light hover:text-icon-cyan" data-balance-type="ethereum-usd">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Transfer Out Modal -->
+    <div id="transfer-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-2xl sm:text-3xl font-bold text-primary-light mb-4 sm:mb-6">Transfer Funds</h3>
+            <form id="transfer-form" class="space-y-4 sm:space-y-6 text-left">
+                <!-- Transfer Type Selection -->
+                <div class="mb-3 sm:mb-4">
+                    <label class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Transfer Type</label>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="transferType" value="usd" class="form-radio text-btn-accent-from h-4 w-4 sm:h-5 sm:w-5" checked>
+                            <span class="ml-1.5 sm:ml-2 text-primary-light text-sm sm:text-base">USD Transfer</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="transferType" value="crypto" class="form-radio text-icon-cyan h-4 w-4 sm:h-5 sm:w-5">
+                            <span class="ml-1.5 sm:ml-2 text-primary-light text-sm sm:text-base">Crypto Transfer</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- USD Transfer Fields -->
+                <div id="usd-transfer-fields">
+                    <div>
+                        <label for="usd-recipient-email" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Recipient Email/Bank Account</label>
+                        <input type="text" id="usd-recipient-email" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-btn-accent-from" placeholder="e.g., recipient@example.com or 1234567890">
+                    </div>
+                    <div>
+                        <label for="usd-transfer-amount" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Amount (USD)</label>
+                        <input type="number" id="usd-transfer-amount" step="0.01" min="0.01" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-btn-accent-from" placeholder="e.g., 50.00">
+                        <p id="usd-transfer-amount-error" class="text-btn-red text-xs sm:text-sm mt-1 hidden">Insufficient balance or invalid amount.</p>
+                    </div>
+                    <div>
+                        <label for="usd-bank-name" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Recipient Bank Name (Optional)</label>
+                        <input type="text" id="usd-bank-name" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-btn-accent-from" placeholder="e.g., Bank of America">
+                    </div>
+                </div>
+
+                <!-- Crypto Transfer Fields -->
+                <div id="crypto-transfer-fields" class="hidden">
+                    <div>
+                        <label for="crypto-transfer-select" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Select Crypto</label>
+                        <select id="crypto-transfer-select" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-icon-cyan">
+                            <option value="bitcoin">Bitcoin (BTC)</option>
+                            <option value="ethereum">Ethereum (ETH)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="crypto-transfer-amount" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Crypto Amount</label>
+                        <input type="number" id="crypto-transfer-amount" step="any" min="0.00000001" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-icon-cyan" placeholder="e.0.001 BTC">
+                        <p id="crypto-transfer-amount-error" class="text-btn-red text-xs sm:text-sm mt-1 hidden">Insufficient crypto balance or invalid amount.</p>
+                    </div>
+                    <div>
+                        <label for="crypto-wallet-id" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Recipient Crypto Wallet ID</label>
+                        <input type="text" id="crypto-wallet-id" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-icon-cyan" placeholder="e.g., 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">
+                    </div>
+                    <div>
+                        <label for="crypto-network-fee" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Network Fee (Optional)</label>
+                        <input type="number" id="crypto-network-fee" step="0.000001" min="0" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-icon-cyan" placeholder="e.g., 0.00005 BTC">
+                    </div>
+                </div>
+
+                <!-- Common Transfer PIN Field -->
+                <div>
+                    <label class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Transfer PIN</label>
+                    <input type="password" id="transfer-pin" required class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-btn-accent-from" placeholder="Enter your 4-digit PIN">
+                    <p id="transfer-pin-error" class="text-btn-red text-xs sm:text-sm mt-1 hidden">Invalid Transfer PIN.</p>
+                </div>
+
+                <div class="flex justify-end space-x-3 sm:space-x-4 mt-6 sm:mt-8">
+                    <button type="button" id="cancel-transfer-btn" class="px-4 py-2.5 sm:px-6 sm:py-3 bg-card-green hover:bg-secondary-green text-primary-light rounded-full text-sm sm:text-base font-semibold transition duration-300">
+                        Cancel
+                    </button>
+                    <button type="submit" id="confirm-transfer-btn" class="px-4 py-2.5 sm:px-6 sm:py-3 bg-btn-accent-from hover:bg-btn-accent-to text-primary-light rounded-full text-sm sm:text-base font-semibold shadow-lg transition duration-300 btn-glow flex items-center justify-center">
+                        Confirm Transfer
+                        <span id="transfer-loading-spinner" class="loading-spinner ml-1.5 sm:ml-2 hidden"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Convert Crypto to USD Modal -->
+    <div id="convert-crypto-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-2xl sm:text-3xl font-bold text-primary-light mb-4 sm:mb-6">Convert Crypto to USD</h3>
+            <form id="convert-crypto-form" class="space-y-4 sm:space-y-6 text-left">
+                <div>
+                    <label for="crypto-select" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Select Crypto</label>
+                    <select id="crypto-select" class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-icon-cyan">
+                        <option value="bitcoin">Bitcoin (BTC)</option>
+                        <option value="ethereum">Ethereum (ETH)</option>
+                        <!-- Add more options if needed and update API call -->
+                    </select>
+                </div>
+                <div>
+                    <label for="crypto-amount-input" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Crypto Amount</label>
+                    <input type="number" id="crypto-amount-input" step="any" min="0.00000001" required class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-icon-cyan" placeholder="e.g., 0.001 BTC">
+                </div>
+                <div class="text-center py-1.5 sm:py-2 text-secondary-light">
+                    <i class="fas fa-arrow-down text-lg sm:text-xl"></i>
+                </div>
+                <div>
+                    <label for="converted-usd-output" class="block text-secondary-light text-xs sm:text-sm font-bold mb-1 sm:mb-2">Converted USD Value</label>
+                    <input type="text" id="converted-usd-output" readonly class="w-full px-3 py-2 sm:px-4 sm:py-3 rounded-lg placeholder-text-secondary focus:outline-none cursor-not-allowed" value="$0.00">
+                </div>
+                <p id="convert-api-error" class="text-btn-red text-xs sm:text-sm mt-1 hidden text-center">Failed to fetch crypto price. Try again.</p>
+                <p id="convert-amount-error" class="text-btn-red text-xs sm:text-sm mt-1 hidden text-center">Insufficient crypto balance or invalid amount.</p>
+                <div class="flex justify-end space-x-3 sm:space-x-4 mt-6 sm:mt-8">
+                    <button type="button" id="cancel-convert-btn" class="px-4 py-2.5 sm:px-6 sm:py-3 bg-card-green hover:bg-secondary-green text-primary-light rounded-full text-sm sm:text-base font-semibold transition duration-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2.5 sm:px-6 sm:py-3 bg-btn-green-from hover:bg-btn-green-to text-primary-light rounded-full text-sm sm:text-base font-semibold shadow-lg transition duration-300 btn-glow">
+                        Convert
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Profile Details Modal (NEW) -->
+    <div id="profile-details-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-2xl sm:text-3xl font-bold text-primary-light mb-4 sm:mb-6">Your Full Profile</h3>
+            <div class="space-y-3 sm:space-y-4 text-left text-secondary-light text-sm sm:text-base">
+                <p><span class="font-semibold text-primary-light">Full Name:</span> <span id="modal-full-name"></span></p>
+                <p><span class="font-semibold text-primary-light">Username:</span> <span id="modal-username"></span></p>
+                <p><span class="font-semibold text-primary-light">Email:</span> <span id="modal-email"></span></p>
+                <p><span class="font-semibold text-primary-light">Phone:</span> <span id="modal-phone"></span></p>
+                <p><span class="font-semibold text-primary-light">Sex:</span> <span id="modal-sex"></span></p>
+                <p><span class="font-semibold text-primary-light">SSN:</span> <span id="modal-ssn"></span></p>
+                <p><span class="font-semibold text-primary-light">Home Address:</span> <span id="modal-home-address"></span></p>
+            </div>
+            <button type="button" id="close-profile-details-modal-btn" class="mt-6 sm:mt-8 px-4 py-2.5 sm:px-6 sm:py-3 bg-btn-green-from hover:bg-btn-green-to text-primary-light rounded-full text-sm sm:text-base font-semibold shadow-lg transition duration-300">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Contact Support Modal -->
+    <div id="contact-support-modal" class="modal-overlay">
+        <div class="modal-content">
+            <i class="fas fa-exclamation-triangle text-5xl sm:text-6xl text-btn-red mb-3 sm:mb-4"></i>
+            <h3 class="text-2xl sm:text-3xl font-bold text-primary-light mb-1.5 sm:mb-2">Transfer/Conversion Assistance Needed!</h3>
+            <p class="text-secondary-light text-sm sm:text-lg mb-4 sm:mb-6">
+                We are unable to process your request directly at this time. Please chat with our customer care team from the chat app (the icon at your right hand) or email:
+                <a href="mailto:globalleafnationalbk@gmail.com" class="text-icon-cyan hover:underline">globalleafnationalbk@gmail.com</a> for assistance.
+            </p>
+            <button type="button" id="close-support-modal-btn" class="px-4 py-2.5 sm:px-6 sm:py-3 bg-btn-red hover:bg-btn-red-hover text-primary-light rounded-full text-sm sm:text-base font-semibold transition duration-300">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Restricted Account Modal (NEW) -->
+    <div id="restricted-account-modal" class="modal-overlay">
+        <div class="modal-content">
+            <i class="fas fa-ban text-5xl sm:text-6xl text-btn-red mb-3 sm:mb-4"></i>
+            <h3 class="text-2xl sm:text-3xl font-bold text-primary-light mb-1.5 sm:mb-2">Account Restricted!</h3>
+            <p class="text-secondary-light text-sm sm:text-lg mb-4 sm:mb-6">Your account has been restricted by the administration. You will be logged out.</p>
+            <p class="text-secondary-light text-xs sm:text-sm mb-4 sm:mb-6">Please contact support for more information:</p>
+            <p class="text-secondary-light text-xs sm:text-sm mb-4 sm:mb-6">Email: <a href="mailto:globalleafnationalbk@gmail.com" class="text-icon-cyan hover:underline">globalleafnationalbk@gmail.com</a></p>
+            <button type="button" id="close-restricted-modal-btn" class="px-4 py-2.5 sm:px-6 sm:py-3 bg-btn-red hover:bg-btn-red-hover text-primary-light rounded-full text-sm sm:text-base font-semibold transition duration-300">
+                Acknowledge & Logout
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-secondary-green py-4 sm:py-6 text-center text-secondary-light text-xs sm:text-sm mt-auto">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Greenleaf National Bank. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Firebase configuration (use same as registration/login)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAAH3xgk4pdBWmqp-Dsjhk48KMycRaU18",
+            authDomain: "paralegal-web-app.firebaseapp.com",
+            databaseURL: "https://paralegal-web-app-default-rtdb.firebaseio.com",
+            projectId: "paralegal-web-app",
+            storageBucket: "paralegal-web-app.firebasestorage.app",
+            messagingSenderId: "966897791344",
+            appId: "1:966897791344:web:83ca8aceb0426a4b925fb5",
+            measurementId: "G-ZHKTRGZSJK"
+        };
+
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        let currentUser = null;
+        let userProfileRef = null;
+        let userProfileData = null; // This will hold the entire profile data
+
+        // --- Preloader Logic ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const loadingBar = document.getElementById('loading-bar');
+            const dashboardContent = document.getElementById('dashboard-content');
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                if (progress <= 100) {
+                    loadingBar.style.width = `${progress}%`;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 100);
+
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.classList.add('preloader-hidden');
+                    preloader.addEventListener('transitionend', () => {
+                        preloader.remove();
+                        dashboardContent.classList.add('fade-in-content'); // Trigger content fade-in
+                    });
+                }
+            }, 1500);
+        });
+
+        // --- DOM Elements ---
+        const displayUsernameButtonText = document.getElementById('display-username-button-text'); // Renamed
+        const profileViewBtn = document.getElementById('profile-view-btn'); // New profile button
+        const logoutBtn = document.getElementById('logout-btn');
+        const usdBalanceEl = document.getElementById('usd-balance');
+        const cryptoBalanceEl = document.getElementById('crypto-balance');
+        const depositCryptoBtn = document.getElementById('deposit-crypto-btn');
+        const transferOutBtn = document.getElementById('transfer-out-btn');
+        const viewTransactionsBtn = document.getElementById('view-transactions-btn'); // Placeholder for future use
+
+        const profileFullNameEl = document.getElementById('profile-full-name');
+        const profileUsernameEl = document.getElementById('profile-username');
+        const profileEmailEl = document.getElementById('profile-email');
+        const profilePhoneEl = document.getElementById('profile-phone');
+        const profileSexEl = document.getElementById('profile-sex');
+
+        const transactionsListEl = document.getElementById('transactions-list');
+        const noTransactionsMessage = document.getElementById('no-transactions-message');
+        const cryptoHoldingsListEl = document.getElementById('crypto-holdings-list');
+        const noCryptoMessage = document.getElementById('no-crypto-message');
+
+        // Individual Crypto Balance Elements
+        const bitcoinBalanceAmountEl = document.getElementById('bitcoin-balance-amount');
+        const bitcoinBalanceUsdEl = document.getElementById('bitcoin-balance-usd');
+        const ethereumBalanceAmountEl = document.getElementById('ethereum-balance-amount');
+        const ethereumBalanceUsdEl = document.getElementById('ethereum-balance-usd');
+
+        // Balance Toggle Buttons
+        const balanceToggleButtons = document.querySelectorAll('.balance-toggle-btn');
+
+        // Theme Selector Elements
+        const themeDropdownButton = document.getElementById('theme-dropdown-button');
+        const themeDropdownMenu = document.getElementById('theme-dropdown-menu');
+        const themeDarkBtn = document.getElementById('theme-dark-btn');
+        const themeLightBtn = document.getElementById('theme-light-btn');
+
+        // Modals and their elements
+        const transferModalOverlay = document.getElementById('transfer-modal-overlay');
+        const transferForm = document.getElementById('transfer-form');
+        const cancelTransferBtn = document.getElementById('cancel-transfer-btn');
+        const transferPinInput = document.getElementById('transfer-pin');
+        const transferPinError = document.getElementById('transfer-pin-error');
+        const confirmTransferBtn = document.getElementById('confirm-transfer-btn');
+        const transferLoadingSpinner = document.getElementById('transfer-loading-spinner');
+
+        // Transfer Type Specific Fields
+        const transferTypeRadios = document.querySelectorAll('input[name="transferType"]');
+        const usdTransferFields = document.getElementById('usd-transfer-fields');
+        const cryptoTransferFields = document.getElementById('crypto-transfer-fields');
+
+        // USD Transfer specific fields
+        const usdRecipientEmailInput = document.getElementById('usd-recipient-email');
+        const usdTransferAmountInput = document.getElementById('usd-transfer-amount');
+        const usdTransferAmountError = document.getElementById('usd-transfer-amount-error');
+        const usdBankNameInput = document.getElementById('usd-bank-name');
+
+        // Crypto Transfer specific fields
+        const cryptoTransferSelect = document.getElementById('crypto-transfer-select');
+        const cryptoTransferAmountInput = document.getElementById('crypto-transfer-amount');
+        const cryptoWalletIdInput = document.getElementById('crypto-wallet-id');
+        const cryptoNetworkFeeInput = document.getElementById('crypto-network-fee');
+        const cryptoTransferAmountError = document.getElementById('crypto-transfer-amount-error');
+
+
+        const convertCryptoModalOverlay = document.getElementById('convert-crypto-modal-overlay');
+        const convertCryptoForm = document.getElementById('convert-crypto-form');
+        const cancelConvertBtn = document.getElementById('cancel-convert-btn');
+        const cryptoSelectInput = document.getElementById('crypto-select');
+        const cryptoAmountInput = document.getElementById('crypto-amount-input');
+        const convertedUsdOutput = document.getElementById('converted-usd-output');
+        const convertApiError = document.getElementById('convert-api-error');
+        const convertAmountError = document.getElementById('convert-amount-error');
+
+        const contactSupportModal = document.getElementById('contact-support-modal');
+        const closeSupportModalBtn = document.getElementById('close-support-modal-btn');
+
+        // Restricted Account Modal Elements
+        const restrictedAccountModal = document.getElementById('restricted-account-modal');
+        const closeRestrictedModalBtn = document.getElementById('close-restricted-modal-btn');
+
+        // New Profile Details Modal Elements
+        const profileDetailsModalOverlay = document.getElementById('profile-details-modal-overlay');
+        const closeProfileDetailsModalBtn = document.getElementById('close-profile-details-modal-btn');
+        const modalFullName = document.getElementById('modal-full-name');
+        const modalUsername = document.getElementById('modal-username');
+        const modalEmail = document.getElementById('modal-email');
+        const modalPhone = document.getElementById('modal-phone');
+        const modalSex = document.getElementById('modal-sex');
+        const modalSsn = document.getElementById('modal-ssn');
+        const modalHomeAddress = document.getElementById('modal-home-address');
+
+
+        // --- Functions ---
+
+        // Show/Hide Modals
+        function showModal(modalElement) {
+            console.log(`Showing modal: ${modalElement.id}`);
+            modalElement.classList.add('active');
+            // Add a check to confirm classes are applied
+            console.log(`Modal ${modalElement.id} has 'active' class: ${modalElement.classList.contains('active')}`);
+        }
+
+        function hideModal(modalElement) {
+            modalElement.classList.remove('active');
+            // Reset form fields and errors when modal hides
+            if (modalElement === transferModalOverlay) {
+                transferForm.reset();
+                usdTransferAmountError.classList.add('hidden'); // Specific error for USD
+                cryptoTransferAmountError.classList.add('hidden'); // Specific error for Crypto
+                transferPinError.classList.add('hidden');
+                // Reset to USD transfer fields by default
+                document.querySelector('input[name="transferType"][value="usd"]').checked = true;
+                toggleTransferFields();
+            } else if (modalElement === convertCryptoModalOverlay) {
+                convertCryptoForm.reset();
+                convertedUsdOutput.value = '$0.00'; // Reset converted output
+                convertApiError.classList.add('hidden');
+                convertAmountError.classList.add('hidden');
+            }
+        }
+
+        // --- Fetch Crypto Price ---
+        const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3/simple/price';
+        let cryptoPrices = {}; // Cache prices
+
+        async function fetchCryptoPrice(cryptoId) {
+            if (cryptoPrices[cryptoId]) {
+                return cryptoPrices[cryptoId];
+            }
+            try {
+                const response = await fetch(`${COINGECKO_API_URL}?ids=${cryptoId}&vs_currencies=usd`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                if (data && data[cryptoId] && data[cryptoId].usd) {
+                    cryptoPrices[cryptoId] = data[cryptoId].usd;
+                    return data[cryptoId].usd;
+                } else {
+                    throw new Error('Invalid API response format.');
+                }
+            } catch (error) {
+                console.error("DASHBOARD DEBUG: Error fetching crypto price:", error);
+                return null;
+            }
+        }
+
+        // --- Update Dashboard UI with User Data ---
+        async function updateDashboardUI(profile) {
+            console.log("DASHBOARD DEBUG: Updating UI with profile data:", JSON.parse(JSON.stringify(profile)));
+
+            // Update Profile Button Text
+            displayUsernameButtonText.textContent = profile.username || 'Profile';
+
+            // Update main dashboard profile card (basic info)
+            profileFullNameEl.textContent = profile.full_name || 'N/A';
+            profileUsernameEl.textContent = profile.username || 'N/A';
+            profileEmailEl.textContent = profile.email || 'N/A';
+            profilePhoneEl.textContent = profile.phone_number || 'N/A';
+            profileSexEl.textContent = profile.sex || 'N/A';
+
+            // Update USD balance
+            usdBalanceEl.textContent = `$${(profile.usd_balance || 0).toFixed(2)}`;
+
+            // Update individual crypto balances and calculate total crypto USD value
+            const btcAmount = profile.bitcoin_balance || 0;
+            const ethAmount = profile.ethereum_balance || 0;
+
+            const btcPrice = await fetchCryptoPrice('bitcoin');
+            const ethPrice = await fetchCryptoPrice('ethereum');
+
+            const btcUsdValue = btcAmount * (btcPrice || 0);
+            const ethUsdValue = ethAmount * (ethPrice || 0);
+
+            bitcoinBalanceAmountEl.textContent = `${btcAmount.toFixed(8)} BTC`;
+            bitcoinBalanceUsdEl.querySelector('span').textContent = `$${btcUsdValue.toFixed(2)}`;
+
+            ethereumBalanceAmountEl.textContent = `${ethAmount.toFixed(8)} ETH`;
+            ethereumBalanceUsdEl.querySelector('span').textContent = `$${ethUsdValue.toFixed(2)}`;
+
+            // Update total crypto balance (crypto_balance field from DB)
+            cryptoBalanceEl.textContent = `$${(profile.crypto_balance || 0).toFixed(2)}`;
+
+            // Render recent activity
+            renderTransactions(profile.recent_activity || []);
+
+            // Render crypto holdings (if you have other cryptos besides BTC/ETH, otherwise this might be redundant)
+            renderCryptoHoldings(profile); // This function will filter for non-BTC/ETH
+            
+            // Apply visibility states after updating all values
+            applyBalanceVisibility();
+
+            // Populate the Profile Details Modal (so it's ready when opened)
+            populateProfileDetailsModal(profile);
+        }
+
+        // --- Populate Profile Details Modal ---
+        function populateProfileDetailsModal(profile) {
+            modalFullName.textContent = profile.full_name || 'N/A';
+            modalUsername.textContent = profile.username || 'N/A';
+            modalEmail.textContent = profile.email || 'N/A';
+            modalPhone.textContent = profile.phone_number || 'N/A';
+            modalSex.textContent = profile.sex || 'N/A';
+            modalSsn.textContent = profile.ssn || 'N/A';
+            modalHomeAddress.textContent = profile.home_address || 'N/A';
+        }
+
+        // --- Render Transactions ---
+        function renderTransactions(transactions) {
+            transactionsListEl.innerHTML = ''; // Clear existing
+            if (!transactions || transactions.length === 0) {
+                noTransactionsMessage.classList.remove('hidden');
+                return;
+            } else {
+                noTransactionsMessage.classList.add('hidden');
+            }
+
+            // Sort transactions by date (most recent first)
+            transactions.sort((a, b) => {
+                const dateA = a.date ? new Date(a.date) : new Date(0);
+                const dateB = b.date ? new Date(b.date) : new Date(0);
+                return dateB - dateA;
+            });
+
+            transactions.forEach(tx => {
+                // Determine icon and color based on transaction type or custom properties
+                let typeClass = '';
+                let sign = '';
+                let iconClass = '';
+
+                // Default for admin fund and deposits
+                if (tx.type === 'deposit' || tx.type === 'admin_fund' || tx.type === 'convert_to_usd') {
+                    typeClass = 'text-balance-green';
+                    sign = '+';
+                    iconClass = 'fas fa-arrow-circle-down'; // Incoming fund
+                } else if (tx.type === 'withdrawal' || tx.type === 'crypto_transfer_out') {
+                    typeClass = 'text-btn-red';
+                    sign = '-';
+                    iconClass = 'fas fa-arrow-circle-up'; // Outgoing fund
+                } else {
+                    // Fallback for unknown types
+                    typeClass = 'text-secondary-light';
+                    iconClass = 'fas fa-question-circle';
+                }
+
+                // If transaction object has specific icon/color, use them (e.g., from admin fund)
+                if (tx.color) typeClass = tx.color;
+                if (tx.icon) iconClass = tx.icon;
+
+                // Ensure amount is a number for toFixed and format currency
+                const amount = typeof tx.amount === 'number' ? tx.amount : parseFloat(tx.amount || '0');
+                const amountDisplay = tx.currency === 'USD' ? `$${amount.toFixed(2)}` : `${amount.toFixed(8)} ${tx.currency}`;
+
+                const txElement = document.createElement('div');
+                txElement.className = `transaction-item p-3 sm:p-4 rounded-lg border border-border-color flex items-center justify-between shadow-sm`;
+                txElement.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="${iconClass} ${typeClass} text-xl sm:text-2xl mr-3"></i>
+                        <div>
+                            <p class="text-primary-light font-medium text-sm sm:text-base">${tx.description || 'No description'}</p>
+                            <p class="text-secondary-light text-xs sm:text-sm">${new Date(tx.date).toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <p class="font-bold ${typeClass} text-sm sm:text-base">${sign} ${amountDisplay}</p>
+                `;
+                transactionsListEl.appendChild(txElement);
+            });
+        }
+
+        // --- Render Crypto Holdings (only for 'other' cryptos, BTC/ETH have dedicated sections) ---
+        function renderCryptoHoldings(profile) {
+            cryptoHoldingsListEl.innerHTML = ''; // Clear existing
+            // For now, we assume only BTC and ETH are explicitly displayed below.
+            // If you add other cryptos to `profile` (e.g., `profile.litecoin_balance`),
+            // you would add logic here to create elements for them.
+            noCryptoMessage.classList.remove('hidden'); // Always show "No crypto holdings" if only BTC/ETH are managed below.
+        }
+
+        // --- Authentication State Listener ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                // Path for profile data - ALL user data (profile, balances, transactions) is expected here
+                userProfileRef = ref(database, `artifacts/${firebaseConfig.projectId}/users/${currentUser.uid}/profiles`);
+                fetchUserProfileAndListen();
+            } else {
+                // User is signed out, redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        // --- Fetch User Profile Data and Listen for Changes ---
+        function fetchUserProfileAndListen() {
+            if (!userProfileRef) return;
+
+            onValue(userProfileRef, (snapshot) => {
+                userProfileData = snapshot.val();
+                if (userProfileData) {
+                    // Ensure recent_activity is an array, initialize if null or not an array
+                    if (!userProfileData.recent_activity || !Array.isArray(userProfileData.recent_activity)) {
+                        userProfileData.recent_activity = [];
+                    }
+                    // Initialize balances if they don't exist
+                    if (typeof userProfileData.usd_balance === 'undefined') userProfileData.usd_balance = 0;
+                    if (typeof userProfileData.bitcoin_balance === 'undefined') userProfileData.bitcoin_balance = 0;
+                    if (typeof userProfileData.ethereum_balance === 'undefined') userProfileData.ethereum_balance = 0;
+                    if (typeof userProfileData.crypto_balance === 'undefined') userProfileData.crypto_balance = 0; // Total USD value of crypto
+
+                    updateDashboardUI(userProfileData);
+                    // Check for restricted status
+                    if (userProfileData.status === 'restricted') {
+                        showModal(restrictedAccountModal);
+                    } else {
+                        hideModal(restrictedAccountModal);
+                    }
+                } else {
+                    console.warn("User profile data not found. Initializing or redirecting.");
+                    showModal(restrictedAccountModal); // Fallback for missing profiles
+                }
+            }, (error) => {
+                console.error("Error fetching user profile:", error);
+                showModal(contactSupportModal); // Show generic support modal on data fetch error
+            });
+        }
+
+        // --- Update User Profile in DB (for transfers, conversions) ---
+        async function updateProfileInDB(updatedData) {
+            if (!currentUser || !userProfileRef) {
+                console.error("No authenticated user or profile reference to update.");
+                return false;
+            }
+            try {
+                await update(userProfileRef, updatedData);
+                console.log("Profile updated successfully in DB.");
+                return true;
+            } catch (error) {
+                console.error("Error updating profile in DB:", error);
+                return false;
+            }
+        }
+
+        // --- Theme Switching ---
+        const savedTheme = localStorage.getItem('finflowTheme') || 'dark';
+
+        function applyTheme(themeName) {
+            document.body.classList.remove('light', 'dark');
+            document.body.classList.add(themeName);
+            localStorage.setItem('finflowTheme', themeName);
+        }
+
+        // Initialize theme
+        applyTheme(savedTheme);
+
+        // Theme dropdown
+        themeDropdownButton.addEventListener('click', () => {
+            themeDropdownMenu.classList.toggle('hidden');
+        });
+        window.addEventListener('click', (e) => {
+            if (!themeDropdownButton.contains(e.target) && !themeDropdownMenu.contains(e.target)) {
+                themeDropdownMenu.classList.add('hidden');
+            }
+        });
+        themeDarkBtn.addEventListener('click', () => {
+            applyTheme('dark');
+            themeDropdownMenu.classList.add('hidden');
+        });
+        themeLightBtn.addEventListener('click', () => {
+            applyTheme('light');
+            themeDropdownMenu.classList.add('hidden');
+        });
+
+        // --- Event Listeners ---
+
+        // Logout
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                window.location.href = window.location.origin + '/login.html';
+            } catch (error) {
+                console.error("DASHBOARD DEBUG: Error logging out:", error);
+            }
+        });
+
+        // Show Transfer Modal
+        transferOutBtn.addEventListener('click', () => {
+            showModal(transferModalOverlay);
+            document.querySelector('input[name="transferType"][value="usd"]').checked = true;
+            toggleTransferFields();
+        });
+
+        // Cancel Transfer
+        cancelTransferBtn.addEventListener('click', () => {
+            hideModal(transferModalOverlay);
+        });
+
+        // Toggle transfer fields
+        function toggleTransferFields() {
+            const selectedType = document.querySelector('input[name="transferType"]:checked').value;
+            if (selectedType === 'usd') {
+                usdTransferFields.classList.remove('hidden');
+                cryptoTransferFields.classList.add('hidden');
+                usdRecipientEmailInput.setAttribute('required', 'true');
+                usdTransferAmountInput.setAttribute('required', 'true');
+                cryptoTransferAmountInput.removeAttribute('required');
+                cryptoWalletIdInput.removeAttribute('required');
+            } else {
+                usdTransferFields.classList.add('hidden');
+                cryptoTransferFields.classList.remove('hidden');
+                usdRecipientEmailInput.removeAttribute('required');
+                usdTransferAmountInput.removeAttribute('required');
+                cryptoTransferAmountInput.setAttribute('required', 'true');
+                cryptoWalletIdInput.setAttribute('required', 'true');
+            }
+            // Clear errors
+            usdTransferAmountError.classList.add('hidden');
+            cryptoTransferAmountError.classList.add('hidden');
+            transferPinError.classList.add('hidden');
+        }
+
+        // Transfer type change
+        transferTypeRadios.forEach(radio => {
+            radio.addEventListener('change', toggleTransferFields);
+        });
+
+        // Handle transfer form submit (now redirects to support after validation)
+        transferForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userProfileData) {
+                hideModal(transferModalOverlay);
+                showModal(contactSupportModal);
+                return;
+            }
+
+            transferPinError.classList.add('hidden');
+            usdTransferAmountError.classList.add('hidden');
+            cryptoTransferAmountError.classList.add('hidden');
+
+            const transferType = document.querySelector('input[name="transferType"]:checked').value;
+            const pin = transferPinInput.value;
+
+            // Basic validation
+            let isValid = true;
+            let amount;
+
+            if (transferType === 'usd') {
+                amount = parseFloat(usdTransferAmountInput.value);
+                if (isNaN(amount) || amount <= 0) {
+                    usdTransferAmountError.textContent = "Please enter a valid USD amount.";
+                    usdTransferAmountError.classList.remove('hidden');
+                    isValid = false;
+                } else if (amount > userProfileData.usd_balance) {
+                    usdTransferAmountError.textContent = "Insufficient USD balance.";
+                    usdTransferAmountError.classList.remove('hidden');
+                    isValid = false;
+                }
+            } else { // crypto transfer
+                amount = parseFloat(cryptoTransferAmountInput.value);
+                const selectedCrypto = cryptoTransferSelect.value;
+                const networkFee = parseFloat(cryptoNetworkFeeInput.value) || 0;
+                let cryptoBalanceKey = `${selectedCrypto}_balance`;
+                const currentCryptoAmount = userProfileData[cryptoBalanceKey] || 0;
+
+                if (isNaN(amount) || amount <= 0) {
+                    cryptoTransferAmountError.textContent = "Please enter a valid crypto amount.";
+                    cryptoTransferAmountError.classList.remove('hidden');
+                    isValid = false;
+                } else if ((amount + networkFee) > currentCryptoAmount) {
+                    cryptoTransferAmountError.textContent = `Insufficient ${selectedCrypto.toUpperCase()} balance (including fees).`;
+                    cryptoTransferAmountError.classList.remove('hidden');
+                    isValid = false;
+                }
+            }
+
+            if (pin !== userProfileData.transfer_pin) {
+                transferPinError.textContent = "Invalid Transfer PIN.";
+                transferPinError.classList.remove('hidden');
+                isValid = false;
+            }
+
+            // If any validation fails, stop here
+            if (!isValid) {
+                return;
+            }
+
+            // If validation passes, show the contact support modal and do NOT process the transfer
+            confirmTransferBtn.disabled = true;
+            transferLoadingSpinner.classList.remove('hidden');
+
+            setTimeout(() => {
+                confirmTransferBtn.disabled = false;
+                transferLoadingSpinner.classList.add('hidden');
+                hideModal(transferModalOverlay);
+                showModal(contactSupportModal);
+            }, 1500); // Simulate a small delay before showing the modal
+        });
+
+        // --- Convert Crypto to USD Modal (restored functionality) ---
+        depositCryptoBtn.addEventListener('click', () => {
+            showModal(convertCryptoModalOverlay);
+            updateConvertedUsd(); // Update on open
+        });
+
+        cancelConvertBtn.addEventListener('click', () => {
+            hideModal(convertCryptoModalOverlay);
+        });
+
+        convertCryptoModalOverlay.addEventListener('click', (e) => {
+            if (e.target === convertCryptoModalOverlay) {
+                hideModal(convertCryptoModalOverlay);
+            }
+        });
+
+        async function updateConvertedUsd() {
+            convertAmountError.classList.add('hidden');
+            convertApiError.classList.add('hidden');
+
+            const cryptoId = cryptoSelectInput.value;
+            const cryptoAmount = parseFloat(cryptoAmountInput.value);
+
+            if (isNaN(cryptoAmount) || cryptoAmount <= 0) {
+                convertedUsdOutput.value = '$0.00';
+                return;
+            }
+
+            const price = await fetchCryptoPrice(cryptoId);
+            if (price === null) {
+                convertedUsdOutput.value = 'Error';
+                convertApiError.textContent = `Failed to get ${cryptoId} price. Try again.`;
+                convertApiError.classList.remove('hidden');
+                return;
+            }
+
+            const usdValue = cryptoAmount * price;
+            convertedUsdOutput.value = `$${usdValue.toFixed(2)}`;
+        }
+
+        // Event listeners for conversion inputs
+        cryptoSelectInput.addEventListener('change', updateConvertedUsd);
+        cryptoAmountInput.addEventListener('input', updateConvertedUsd);
+
+        convertCryptoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userProfileData) {
+                showModal(contactSupportModal); // Or a more specific error
+                return;
+            }
+
+            convertAmountError.classList.add('hidden');
+            convertApiError.classList.add('hidden');
+
+            const selectedCrypto = cryptoSelectInput.value;
+            const cryptoAmount = parseFloat(cryptoAmountInput.value);
+            const usdValue = parseFloat(convertedUsdOutput.value.replace('$', ''));
+
+            if (isNaN(cryptoAmount) || cryptoAmount <= 0 || isNaN(usdValue) || usdValue <= 0) {
+                convertAmountError.textContent = "Please enter a valid crypto amount.";
+                convertAmountError.classList.remove('hidden');
+                return;
+            }
+
+            let cryptoBalanceKey = `${selectedCrypto}_balance`;
+            const currentCryptoAmount = userProfileData[cryptoBalanceKey] || 0;
+
+            if (cryptoAmount > currentCryptoAmount) {
+                convertAmountError.textContent = `Insufficient ${selectedCrypto.toUpperCase()} balance.`;
+                convertAmountError.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                let updatedProfile = { ...userProfileData };
+
+                // Deduct crypto
+                updatedProfile[cryptoBalanceKey] -= cryptoAmount;
+
+                // Add USD
+                updatedProfile.usd_balance = (updatedProfile.usd_balance || 0) + usdValue;
+
+                // Recalculate total crypto balance after funding individual crypto
+                const btcPrice = await fetchCryptoPrice('bitcoin');
+                const ethPrice = await fetchCryptoPrice('ethereum');
+                updatedProfile.crypto_balance = (updatedProfile.bitcoin_balance * (btcPrice || 0)) + (updatedProfile.ethereum_balance * (ethPrice || 0));
+
+                if (!updatedProfile.recent_activity) {
+                    updatedProfile.recent_activity = [];
+                }
+
+                updatedProfile.recent_activity.unshift({
+                    type: 'convert_to_usd',
+                    description: `Converted ${cryptoAmount.toFixed(8)} ${selectedCrypto.toUpperCase()} to $${usdValue.toFixed(2)} USD`,
+                    amount: usdValue,
+                    currency: 'USD',
+                    date: new Date().toISOString(),
+                    icon: 'fas fa-coins',
+                    color: 'text-balance-green'
+                });
+
+                const dbUpdateSuccess = await updateProfileInDB(updatedProfile);
+                if (dbUpdateSuccess) {
+                    alert('Conversion successful!');
+                    hideModal(convertCryptoModalOverlay);
+                } else {
+                    showModal(contactSupportModal);
+                }
+
+            } catch (error) {
+                console.error("Conversion failed:", error);
+                showModal(contactSupportModal);
+            }
+        });
+
+
+        // Contact support modal
+        closeSupportModalBtn.addEventListener('click', () => {
+            hideModal(contactSupportModal);
+        });
+
+        // Restricted account modal close & logout
+        closeRestrictedModalBtn.addEventListener('click', async () => {
+            await signOut(auth);
+            window.location.href = window.location.origin + '/login.html';
+        });
+
+        // --- Profile Details Modal Event Listeners ---
+        profileViewBtn.addEventListener('click', () => {
+            console.log("Profile button clicked.");
+            if (userProfileData) {
+                console.log("User profile data is available. Attempting to show modal.");
+                populateProfileDetailsModal(userProfileData); // Ensure data is fresh
+                showModal(profileDetailsModalOverlay);
+            } else {
+                console.warn("User profile data is NOT yet loaded. Cannot show profile modal.");
+                // Optionally, you could show a temporary message to the user here
+                // e.g., alert("Your profile data is still loading. Please try again in a moment.");
+            }
+        });
+
+        closeProfileDetailsModalBtn.addEventListener('click', () => {
+            hideModal(profileDetailsModalOverlay);
+        });
+
+        profileDetailsModalOverlay.addEventListener('click', (e) => {
+            if (e.target === profileDetailsModalOverlay) {
+                hideModal(profileDetailsModalOverlay);
+            }
+        });
+
+
+        // --- Balance Visibility ---
+        const balanceVisibilityState = JSON.parse(localStorage.getItem('balanceVisibility')) || {
+            usd: true,
+            'total-crypto': true,
+            'bitcoin-usd': true,
+            'ethereum-usd': true
+        };
+
+        function toggleBalanceVisibility(type) {
+            balanceVisibilityState[type] = !balanceVisibilityState[type];
+            localStorage.setItem('balanceVisibility', JSON.stringify(balanceVisibilityState));
+            applyBalanceVisibility();
+        }
+
+        function applyBalanceVisibility() {
+            // USD Balance
+            const usdBalanceSpan = usdBalanceEl;
+            const usdToggleBtn = usdBalanceEl.previousElementSibling.querySelector('.balance-toggle-btn i');
+            if (balanceVisibilityState.usd) {
+                usdBalanceSpan.classList.remove('balance-hidden');
+                usdToggleBtn.classList.remove('fa-eye-slash');
+                usdToggleBtn.classList.add('fa-eye');
+            } else {
+                usdBalanceSpan.classList.add('balance-hidden');
+                usdToggleBtn.classList.remove('fa-eye');
+                usdToggleBtn.classList.add('fa-eye-slash');
+            }
+
+            // Total Crypto Balance
+            const totalCryptoBalanceSpan = cryptoBalanceEl;
+            const totalCryptoToggleBtn = cryptoBalanceEl.previousElementSibling.querySelector('.balance-toggle-btn i');
+            if (balanceVisibilityState['total-crypto']) {
+                totalCryptoBalanceSpan.classList.remove('balance-hidden');
+                totalCryptoToggleBtn.classList.remove('fa-eye-slash');
+                totalCryptoToggleBtn.classList.add('fa-eye');
+            } else {
+                totalCryptoBalanceSpan.classList.add('balance-hidden');
+                totalCryptoToggleBtn.classList.remove('fa-eye');
+                totalCryptoToggleBtn.classList.add('fa-eye-slash');
+            }
+
+            // Bitcoin USD
+            const bitcoinUsdSpan = bitcoinBalanceUsdEl.querySelector('span');
+            const bitcoinUsdToggleBtn = bitcoinBalanceUsdEl.querySelector('.balance-toggle-btn i');
+            if (balanceVisibilityState['bitcoin-usd']) {
+                bitcoinUsdSpan.classList.remove('balance-hidden');
+                bitcoinUsdToggleBtn.classList.remove('fa-eye-slash');
+                bitcoinUsdToggleBtn.classList.add('fa-eye');
+            } else {
+                bitcoinUsdSpan.classList.add('balance-hidden');
+                bitcoinUsdToggleBtn.classList.remove('fa-eye');
+                bitcoinUsdToggleBtn.classList.add('fa-eye-slash');
+            }
+
+            // Ethereum USD
+            const ethereumUsdSpan = ethereumBalanceUsdEl.querySelector('span');
+            const ethereumUsdToggleBtn = ethereumBalanceUsdEl.querySelector('.balance-toggle-btn i');
+            if (balanceVisibilityState['ethereum-usd']) {
+                ethereumUsdSpan.classList.remove('balance-hidden');
+                ethereumUsdToggleBtn.classList.remove('fa-eye-slash');
+                ethereumUsdToggleBtn.classList.add('fa-eye');
+            } else {
+                ethereumUsdSpan.classList.add('balance-hidden');
+                ethereumUsdToggleBtn.classList.remove('fa-eye');
+                ethereumUsdToggleBtn.classList.add('fa-eye-slash');
+            }
+        }
+
+        balanceToggleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.dataset.balanceType;
+                toggleBalanceVisibility(type);
+            });
+        });
+
+        // Initialize transfer fields and balance visibility on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleTransferFields();
+            applyBalanceVisibility();
+        });
+    </script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688b57b0fb134f1927295159/1j1g4t3jd';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+</body>
+</html>
