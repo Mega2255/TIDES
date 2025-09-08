@@ -226,7 +226,7 @@
             </div>
             <div>
                 <label class="block mb-1 text-secondary-light">Social Security Number (SSN)</label>
-                <input type="text" id="ssn" class="w-full px-4 py-2 border border-border-color rounded bg-card-green text-primary-light placeholder-text-secondary" placeholder="e.g., XXX-XX-XXXX" required pattern="^\d{3}-?\d{2}-?\d{4}$" title="SSN must be in XXX-XX-XXXX format">
+                <input type="text" id="ssn" class="w-full px-4 py-2 border border-border-color rounded bg-card-green text-primary-light placeholder-text-secondary" placeholder="e.g., XXX-XX-XXXX" pattern="^$|^\d{3}-?\d{2}-?\d{4}$" title="SSN must be in XXX-XX-XXXX format">
             </div>
             <div>
                 <label class="block mb-1 text-secondary-light">Home Address</label>
@@ -294,12 +294,13 @@
                 alert('Password must be at least 6 characters long.');
                 return;
             }
-            // Basic validation for SSN (9 digits, optional dashes)
-            const ssnRegex = /^\d{3}-?\d{2}-?\d{4}$/;
-            if (!ssnRegex.test(ssn)) {
-                alert('Please enter a valid SSN (e.g., XXX-XX-XXXX or XXXXXXXXX).');
-                return;
-            }
+            // Basic validation for SSN (only if filled)
+const ssnRegex = /^\d{3}-?\d{2}-?\d{4}$/;
+if (ssn && !ssnRegex.test(ssn)) {
+    alert('Please enter a valid SSN (e.g., XXX-XX-XXXX or XXXXXXXXX).');
+    return;
+}
+
             // Basic validation for Home Address
             if (!homeAddress) {
                 alert('Please enter your home address.');
@@ -369,19 +370,16 @@
         });
     </script>
 
-<!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/688b57b0fb134f1927295159/1j1g4t3jd';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = 'b3a4e4baf39635f9c0597ee3a8ac7d5745462156';
+window.smartsupp||(function(d) {
+	var s,c,o=smartsupp=function(){ o.push(arguments)};o=[];
+	s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+	c.type='text/javascript';c.charset='utf-8';c.async=true;
+	c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
 </script>
-<!--End of Tawk.to Script-->
 
 </body>
 </html>
